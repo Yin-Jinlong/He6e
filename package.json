@@ -1,0 +1,12 @@
+{
+  "name": "he6e",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "gradlew build && pnpm",
+    "build:web": "pnpm run web"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "LGPL-3.0-or-later"
+}

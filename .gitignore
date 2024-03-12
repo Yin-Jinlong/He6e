@@ -1,0 +1,12 @@
+### IDE ###
+
+.vscode/
+.idea/
+
+### Project-Manager ###
+.gradle/
+
+### out ###
+out/
+*build*/
+gen/

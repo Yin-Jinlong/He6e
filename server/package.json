@@ -1,0 +1,10 @@
+{
+  "name": "he6e-server",
+  "version": "1.0.0",
+  "description": "服务端",
+  "author": "Yin-Jinlong",
+  "scripts": {
+    "test": "echo not specified && exit 1"
+  },
+  "license": "LGPL-3.0-or-later"
+}
