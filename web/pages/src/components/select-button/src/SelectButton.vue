@@ -1,5 +1,6 @@
 <template>
     <div class="button"
+         @click="emits('click')"
          data-fill-width
          data-none-select
          data-pointer
@@ -22,9 +23,10 @@
 </style>
 
 <script lang="ts" setup>
-import {defineProps} from 'vue'
+import {defineProps, defineEmits} from 'vue'
 import {SelectButtonProps} from "./select-button";
 
 defineProps<SelectButtonProps>()
+const emits = defineEmits(['click'])
 
 </script>

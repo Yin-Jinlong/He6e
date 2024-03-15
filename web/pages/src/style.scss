@@ -67,3 +67,9 @@
   position : absolute;
   top      : 0;
 }
+
+// 显示类
+
+[data-empty-hide]:empty {
+  display : none;
+}

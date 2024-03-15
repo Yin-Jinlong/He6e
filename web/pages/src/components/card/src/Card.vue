@@ -1,13 +1,15 @@
 <template>
     <div class="card">
         <div class="card-header"
+             data-empty-hide
              data-fill-width>
             <slot name="header"/>
         </div>
         <div class="card-content">
             <slot name="default"/>
         </div>
-        <div class="card-footer">
+        <div class="card-footer"
+             data-empty-hide>
             <slot name="footer"/>
         </div>
     </div>
@@ -20,10 +22,6 @@
   box-shadow       : 2px 2px 20px 0 rgba(0, 0, 0, 0.25);
   margin           : 2em;
   padding          : 20px;
-
-  &:empty {
-    display : none;
-  }
 
   & > div {
     margin : 20px 0;
@@ -40,10 +38,6 @@
 .card-content {
   box-sizing : border-box;
   width      : 100%;
-}
-
-.card-footer:empty {
-  display : none;
 }
 
 </style>
