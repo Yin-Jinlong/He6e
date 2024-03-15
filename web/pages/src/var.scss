@@ -1,0 +1,15 @@
+@use 'sass:map';
+
+$colors : (
+        'primary': #FFA244,
+        'card-background':#FFF
+);
+
+@function get-color($key) {
+  @return map.get($colors, $key);
+}
+
+:root {
+  --card-background : #{get-color('card-background')};
+  --radius-normal   : 10px;
+}

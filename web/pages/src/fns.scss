@@ -1,0 +1,14 @@
+@function get($list, $i) {
+  @if $i<1 {
+    @error 'index out of range';
+  }
+  $j : 1;
+  @each $c in $list {
+    @if $j == $i {
+      @return $c;
+    }
+    $j : $j + 1;
+  }
+  @error 'index out of range';
+}
+
