@@ -1,11 +1,17 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import obfuscator from 'rollup-plugin-obfuscator'
+import path from "node:path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     server: {
         port: 3300
+    },
+    resolve: {
+        alias: {
+            '@components': path.resolve(__dirname, 'src/components')
+        }
     },
     build: {
         minify: 'terser',

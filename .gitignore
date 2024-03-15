@@ -5,6 +5,7 @@
 
 ### Project-Manager ###
 .gradle/
+node_modules/
 
 ### out ###
 out/
