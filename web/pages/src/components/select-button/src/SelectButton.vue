@@ -23,7 +23,6 @@
 </style>
 
 <script lang="ts" setup>
-import {defineProps, defineEmits} from 'vue'
 import {SelectButtonProps} from "./select-button";
 
 defineProps<SelectButtonProps>()
