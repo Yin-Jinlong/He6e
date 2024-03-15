@@ -1,0 +1,109 @@
+@use '../../../../fns' as *;
+
+$colors : (
+    'failed':#F78983,
+    'success':#91F296
+);
+
+.button {
+  align-items      : center;
+  background-color : transparent;
+  border-radius    : 5px;
+  box-sizing       : border-box;
+  color            : #222;
+  display          : flex;
+  overflow         : hidden;
+  padding          : 1em 1em;
+
+  .bg {
+    position : absolute;
+
+  }
+
+  .content {
+    z-index : 1;
+  }
+
+  @each $status, $color in $colors {
+    [data-status='#{$status}'] {
+      background-color : $color;
+    }
+  }
+
+  [data-status='half-right'] {
+    &, &:hover, &:active {
+      background : transparent;
+    }
+
+    &::before, &::after {
+      content    : ' ';
+      height     : 100%;
+      left       : 0;
+      position   : absolute;
+      top        : 0;
+      transition : all 0.3s ease-out;
+      width      : 100%;
+      z-index    : 0;
+    }
+
+    &::before {
+      background-color : #91F296;
+    }
+
+    &::after {
+      background-color : #F78983;
+      clip-path        : polygon(0 0, 100% 0, 100% 100%);
+    }
+  }
+
+  // 父级
+  &:hover {
+
+    .bg {
+      background-color : #eee;
+    }
+
+    @each $status, $color in $colors {
+      [data-status='#{$status}'] {
+        background-color : lighten($color, 5%);
+      }
+    }
+
+    [data-status='half-right'] {
+      &::before {
+        background-color : lighten(#91F296, 5%);
+      }
+
+      &::after {
+        background-color : lighten(#F78983, 5%)
+      }
+    }
+
+  }
+
+  // 父级
+  &:active {
+
+    .bg {
+      background-color : #ddd;
+    }
+
+    @each $status, $color in $colors {
+      [data-status='#{$status}'] {
+        background-color : darken($color, 2%);
+      }
+    }
+
+    [data-status='half-right'] {
+      &::before {
+        background-color : darken(#91F296, 5%);
+      }
+
+      &::after {
+        background-color : darken(#F78983, 5%)
+      }
+    }
+
+  }
+
+}
