@@ -1,0 +1,73 @@
+* {
+  margin  : 0;
+  padding : 0;
+}
+
+// 动画过度类
+
+[data-transition] {
+  transition : all 0.3s ease-out;
+}
+
+[data-transition-fast] {
+  transition : all 0.2s ease-out;
+}
+
+[data-transition-slow] {
+  transition : all 0.4s ease-out;
+}
+
+// 尺寸类
+
+[data-fill-width] {
+  width : 100%;
+}
+
+[data-fill-height] {
+  height : 100%;
+}
+
+[data-fill-size] {
+  height : 100%;
+  width  : 100%;
+}
+
+// 光标类
+
+[data-pointer] {
+  cursor : pointer;
+}
+
+[data-none-select] {
+  -moz-user-select    : none;
+  -webkit-user-select : none;
+  user-select         : none;
+}
+
+// 布局类
+
+[data-flex] {
+  display : flex;
+}
+
+[data-flex-center] {
+  align-items     : center;
+  display         : flex;
+  justify-content : center;
+}
+
+[data-relative] {
+  position : relative;
+}
+
+[data-absolute] {
+  left     : 0;
+  position : absolute;
+  top      : 0;
+}
+
+// 显示类
+
+[data-empty-hide]:empty {
+  display : none;
+}

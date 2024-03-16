@@ -10,8 +10,11 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    "declaration": true,
+    "outDir": "dist",
     "skipLibCheck": true,
-    "noEmit": false,
-    "composite": true
-  }
+    "noEmit": true,
+    "baseUrl": ".",
+  },
+  "include": ["./packages/*.ts", "./packages/**/*.ts","./packages/**/*.vue"]
 }

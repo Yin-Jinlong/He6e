@@ -1,22 +1,74 @@
 {
-  "name": "he6e-web",
+  "name": "he6e-web-ui",
   "version": "1.0.0",
   "description": "web ui库",
   "author": "Yin-Jinlong",
   "type": "module",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
   "scripts": {
-    "dev": "vite"
+    "dev": "cd play && vite",
+    "build": "rollup -c"
   },
   "license": "LGPL-3.0-or-later",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/gulp": "^4.0.17",
     "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^5.0.4",
+    "rollup": "^4.13.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-obfuscator": "^1.1.0",
+    "rollup-plugin-scss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
     "sass": "^1.71.1",
+    "terser": "^5.29.2",
     "typescript": "^5.4.2",
-    "vite": "^5.1.5"
+    "vite": "^5.1.5",
+    "vue-tsc": "^2.0.6"
   },
   "dependencies": {
     "vue": "^3.4.21"
+  },
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs",
+      "require": "./lib/index.js"
+    },
+    "./es": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.mjs"
+    },
+    "./lib": {
+      "types": "./lib/index.d.ts",
+      "require": "./lib/index.js"
+    },
+    "./es/*.mjs": {
+      "types": "./es/*.d.ts",
+      "import": "./es/*.mjs"
+    },
+    "./es/*": {
+      "types": [
+        "./es/*.d.ts",
+        "./es/*/index.d.ts"
+      ],
+      "import": "./es/*.mjs"
+    },
+    "./lib/*.js": {
+      "types": "./lib/*.d.ts",
+      "require": "./lib/*.js"
+    },
+    "./lib/*": {
+      "types": [
+        "./lib/*.d.ts",
+        "./lib/*/index.d.ts"
+      ],
+      "require": "./lib/*.js"
+    },
+    "./*": "./*"
   }
 }

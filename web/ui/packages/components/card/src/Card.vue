@@ -42,6 +42,10 @@
 
 </style>
 
+<style lang="scss">
+@import "packages/style/base.scss";
+</style>
+
 <script lang="ts" setup>
 
 </script>
