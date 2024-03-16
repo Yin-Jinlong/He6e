@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "gradlew build && pnpm",
-    "build:web": "pnpm run web"
+    "build": "pnpm -C web build",
+    "build:pages": "pnpm -C web build:pages",
+    "build:ui": "pnpm -C web build:ui",
+    "dev:pages": "pnpm -C web dev:pages",
+    "dev:ui": "pnpm -C web dev:ui"
   },
   "keywords": [],
   "author": "",

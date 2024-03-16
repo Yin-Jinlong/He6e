@@ -23,3 +23,43 @@
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Yin-Jinlong/he6e/main)
 
 个人习题练习
+
+## 开始
+
+### 安装
+
+```shell
+pnpm i && pnpm -C web i
+```
+
+### 开发
+
+对于页面（需要先构建`ui`）
+
+```shell
+pnpm run dev:pages
+```
+
+对于ui
+
+```shell
+pnpm run dev:ui
+```
+
+### 构建
+
+```shell
+pnpm run build
+```
+
+对于页面（需要先构建`ui`）
+
+```shell
+pnpm run build:pages
+```
+
+对于ui
+
+```shell
+pnpm run build:ui
+```

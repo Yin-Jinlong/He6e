@@ -4,7 +4,11 @@
   "description": "web页面",
   "author": "Yin-Jinlong",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm -C ui build && pnpm -C pages build",
+    "build:pages": "pnpm -C pages build",
+    "build:ui": "pnpm -C ui build",
+    "dev:pages": "pnpm -C pages dev",
+    "dev:ui": "pnpm -C ui dev"
   },
   "license": "LGPL-3.0-or-later"
 }

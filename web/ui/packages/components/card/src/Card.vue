@@ -43,7 +43,7 @@
 </style>
 
 <style lang="scss">
-@import "packages/style/base.scss";
+@import '../../../style/base.scss';
 </style>
 
 <script lang="ts" setup>

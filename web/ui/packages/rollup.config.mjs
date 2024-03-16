@@ -18,21 +18,21 @@ const outConfig = {
 
 export default defineConfig(commandLineArguments => {
     return {
-        input: 'packages/index.ts',
+        input: 'index.ts',
         external: id => {
             return /node_modules/.test(id);
         },
         output: [
             {
                 format: 'es',
-                dir: 'es',
+                dir: '../es',
                 entryFileNames:'[name].mjs',
                 chunkFileNames:'[name].mjs',
                 ...outConfig
             },
             {
                 format: 'cjs',
-                dir: 'lib',
+                dir: '../lib',
                 ...outConfig
             }
         ],

@@ -1,23 +1,22 @@
 {
-  "name": "he6e-web",
+  "name": "he6e-web-ui",
   "version": "1.0.0",
-  "description": "web页面",
+  "description": "web ui库 开发预览",
   "author": "Yin-Jinlong",
   "type": "module",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "types": "es/index.d.ts",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "vite"
   },
   "license": "LGPL-3.0-or-later",
   "devDependencies": {
-    "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^5.0.4",
-    "sass": "^1.71.1",
     "typescript": "^5.4.2",
     "vite": "^5.1.5"
   },
   "dependencies": {
-    "he6e-web-ui": "link:..\\ui",
     "vue": "^3.4.21"
   }
 }

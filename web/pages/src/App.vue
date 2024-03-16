@@ -25,7 +25,7 @@
 .select-box {
   flex-direction: column;
 
-  >div{
+  &>div{
     margin: 5px 0;
   }
 
