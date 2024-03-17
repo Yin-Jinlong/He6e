@@ -10,11 +10,18 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "declaration": true,
-    "outDir": "dist",
+    "declaration": false,
+    "outDir": "../dist/@types",
     "skipLibCheck": true,
-    "noEmit": true,
+    "noEmit": false,
     "baseUrl": ".",
+    "allowImportingTsExtensions": true
   },
-  "include": ["./packages/*.ts", "./packages/**/*.ts","./packages/**/*.vue"]
+  "include": [
+    "./components/*.ts",
+    "./**/*.vue"
+  ],
+  "exclude": [
+    "./build"
+  ]
 }

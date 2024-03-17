@@ -9,7 +9,8 @@
   "types": "es/index.d.ts",
   "scripts": {
     "dev": "pnpm -C play dev",
-    "build": "pnpm -C packages build"
+    "build": "pnpm -C packages build",
+    "build:types": "pnpm -C packages build:types"
   },
   "license": "LGPL-3.0-or-later"
 }
