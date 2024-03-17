@@ -21,15 +21,15 @@
     "rollup": "^4.13.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-scss": "^4.0.0",
     "rollup-plugin-typescript2": "^0.36.0",
-    "sass": "^1.71.1",
+    "sass": "^1.72.0",
     "terser": "^5.29.2",
     "typescript": "^5.4.2",
     "vite": "^5.1.5",
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
+    "rollup-plugin-postcss": "^4.0.2",
     "vue": "^3.4.21"
   },
   "exports": {

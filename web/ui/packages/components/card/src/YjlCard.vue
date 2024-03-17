@@ -16,8 +16,7 @@
 </template>
 
 <style lang="scss" scoped>
-
-@use '../../../style/tools/fns' as *;
+@import '../../../style/tools/fns';
 
 .card {
   background-color : var(--card-background);
@@ -25,11 +24,11 @@
   box-shadow       : 2px 2px 20px 0 rgba(0, 0, 0, 0.25);
   margin           : 2em;
   min-width        : 200px;
-  padding          : #{get-css(padding,xlarge)};
+  padding          : get-css(padding, xlarge);
   width            : max-content;
 
-  & > div:not(:first-child){
-    margin-top : #{get-css(padding,xlarge)};
+  & > div:not(:first-child) {
+    margin-top : get-css(padding, xlarge);
   }
 
 }

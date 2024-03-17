@@ -3,7 +3,7 @@ import typescript from 'rollup-plugin-typescript2'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from "@rollup/plugin-commonjs"
 import vuePlugin from "@vitejs/plugin-vue"
-import scss from "rollup-plugin-scss";
+import postcss from 'rollup-plugin-postcss'
 import del from "rollup-plugin-delete"
 
 /**
@@ -26,8 +26,8 @@ export default defineConfig(commandLineArguments => {
             {
                 format: 'es',
                 dir: '../es',
-                entryFileNames:'[name].mjs',
-                chunkFileNames:'[name].mjs',
+                entryFileNames: '[name].mjs',
+                chunkFileNames: '[name].mjs',
                 ...outConfig
             },
             {
@@ -38,11 +38,11 @@ export default defineConfig(commandLineArguments => {
         ],
         plugins: [
             vuePlugin({
-                isProduction: true
+                isProduction: true,
             }),
-            scss({
-                name:'style.css',
-                fileName:'style/style.css'
+            postcss({
+                extract: true,
+                extensions: ['.scss', '.sass'],
             }),
             typescript({
                 check: false,

@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '../../../style/tools/fns' as *;
+@import '../../../style/tools/fns';
 
 @mixin gen-colors($name) {
   --btn-color    : #{get-css(color,$name)};
@@ -22,7 +22,7 @@
   @include gen-colors(primary);
   background-color    : var(--btn-color);
   border              : none;
-  border-radius       : #{get-css(radius,normal)};
+  border-radius       : get-css(radius, normal);
   color               : white;
   -moz-user-select    : none;
   -webkit-user-select : none;
@@ -49,19 +49,19 @@
   }
 
   &[data-size='small'] {
-    padding : #{get-css(padding,small)} #{get-css(padding,normal)};
+    padding : get-css(padding,small) get-css(padding,normal);
   }
 
   &[data-size='default'] {
-    padding : #{get-css(padding,normal)} #{get-css(padding,large)};
+    padding : get-css(padding,normal) get-css(padding,large);
   }
 
   &[data-size='large'] {
-    padding : #{get-css(padding,normal)} #{get-css(padding,xxl)};
+    padding : get-css(padding,normal) get-css(padding,xxl);
   }
 
   &[data-size='xlarge'] {
-    padding : #{get-css(padding,xlarge)} #{get-css(padding,4xl)};
+    padding : get-css(padding,xlarge) get-css(padding,4xl);
   }
 
   &:hover {
