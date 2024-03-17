@@ -16,24 +16,27 @@
 </template>
 
 <style lang="scss" scoped>
+
+@use '../../../style/tools/fns' as *;
+
 .card {
   background-color : var(--card-background);
   border-radius    : 10px;
   box-shadow       : 2px 2px 20px 0 rgba(0, 0, 0, 0.25);
   margin           : 2em;
   min-width        : 200px;
-  padding          : 20px;
-  width            : fit-content;
+  padding          : #{get-css(padding,xlarge)};
+  width            : max-content;
 
-  & > div {
-    margin : 20px 0;
+  & > div:not(:first-child){
+    margin-top : #{get-css(padding,xlarge)};
   }
 
 }
 
 .card-header {
   border-bottom : #222 solid 2px;
-  font-size     : 24px;
+  font-size     : 20px;
   font-weight   : 900;
 }
 
@@ -42,10 +45,6 @@
   width      : 100%;
 }
 
-</style>
-
-<style lang="scss">
-@use '../../../style/base.scss';
 </style>
 
 <script lang="ts" setup>
