@@ -37,7 +37,11 @@
   }
 
   &[data-size='large'] {
-    padding : #{get-css(padding,normal)} #{get-css(padding,xlarge)};
+    padding : #{get-css(padding,normal)} #{get-css(padding,xxl)};
+  }
+
+  &[data-size='xlarge'] {
+    padding : #{get-css(padding,xlarge)} #{get-css(padding,4xl)};
   }
 
   &:hover {

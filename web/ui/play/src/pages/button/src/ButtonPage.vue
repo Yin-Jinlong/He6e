@@ -17,11 +17,13 @@
                 <yjl-button size="small">按钮</yjl-button>
                 <yjl-button>按钮</yjl-button>
                 <yjl-button size="large">按钮</yjl-button>
+                <yjl-button size="xlarge">按钮</yjl-button>
             </div>
             <div>
                 <yjl-button size="small" type="success">按钮</yjl-button>
                 <yjl-button type="success">按钮</yjl-button>
                 <yjl-button size="large" type="success">按钮</yjl-button>
+                <yjl-button size="xlarge" type="success">按钮</yjl-button>
             </div>
         </template>
     </yjl-card>

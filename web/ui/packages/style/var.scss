@@ -13,13 +13,16 @@ $paddings : (
     'small': 5px,
     'normal': 10px,
     'large' : 15px,
-    'xlarge': 20px
+    'xlarge': 20px,
+    'xxl': 25px,
+    'xxxl': 30px,
+    '4xl': 35px,
 );
 
 /**
  * 圆角集
  */
-$radius : (
+$radius   : (
     'small': 5px,
     'normal': 10px,
     'large': 15px,
