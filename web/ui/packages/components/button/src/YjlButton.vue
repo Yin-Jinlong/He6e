@@ -48,11 +48,14 @@
     background : var(--btn-color--1);
   }
 }
+
+.button + .button {
+  margin-left : 12px;
+}
 </style>
 
 <script lang="ts" setup>
 
-import {defineProps} from 'vue'
 import {YjlButtonProps} from "./yjl-button";
 
 withDefaults(defineProps<YjlButtonProps>(), {
