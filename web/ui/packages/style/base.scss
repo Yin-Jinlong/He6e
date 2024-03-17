@@ -1,3 +1,6 @@
+@use 'var' as *;
+@use './tools/fns' as *;
+
 * {
   margin  : 0;
   padding : 0;
@@ -70,4 +73,33 @@
 
 [data-empty-hide]:empty {
   display : none;
+}
+
+@mixin color-adds($name,$base,$count:5,$v:5%) {
+  @for $i from 1 to $count+1 {
+    --color-#{$name}-#{$i} : #{color-addL($base, $i * $v)};
+  }
+}
+
+@mixin color-subs($name,$base,$count:5,$v:5%) {
+  @for $i from 1 to $count+1 {
+    --color-#{$name}--#{$i} : #{color-subL($base, $i * $v)};
+  }
+}
+
+:root {
+  @each $name, $color in $colors {
+    --color-#{$name}   : #{$color};
+    @include color-adds($name, $color);
+    @include color-subs($name, $color);
+  }
+
+  @each $name, $size in $paddings {
+    --padding-#{$name}: #{$size};
+  }
+
+  @each $name, $size in $radius {
+    --radius-#{$name}: #{$size};
+  }
+
 }

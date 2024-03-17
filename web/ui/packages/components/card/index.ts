@@ -1,3 +1,3 @@
-import Card from "./src/Card.vue";
+import YjlCard from "./src/YjlCard.vue";
 
-export {Card}
+export {YjlCard}

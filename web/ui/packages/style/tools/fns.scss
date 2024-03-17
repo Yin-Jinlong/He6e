@@ -1,0 +1,43 @@
+@function get-css($type,$name) {
+  @return var(--#{$type}-#{$name})
+}
+
+@function color-setH($color,$hue) {
+  @return change-color($color, $hue)
+}
+
+@function color-addL($color,$hue) {
+  $h : hue($color) + $hue;
+  @if $h > 100 {
+    $h : 100;
+  }
+  @return change-color($color, $hue : $h)
+}
+
+@function color-subL($color,$hue) {
+  $h : hue($color) - $hue;
+  @if $h< 0 {
+    $h : 0;
+  }
+  @return change-color($color, $hue : $h)
+}
+
+@function color-setL($color,$light) {
+  @return change-color($color, $lightness : $light)
+}
+
+@function color-addL($color,$light) {
+  $l : lightness($color) + $light;
+  @if $l > 100% {
+    $l : 100%;
+  }
+  @return change-color($color, $lightness : $l)
+}
+
+@function color-subL($color,$light) {
+  $l : lightness($color) - $light;
+  @if $l < 0 {
+    $l : 0;
+  }
+  @return change-color($color, $lightness : $l)
+}

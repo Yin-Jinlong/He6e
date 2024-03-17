@@ -21,7 +21,9 @@
   border-radius    : 10px;
   box-shadow       : 2px 2px 20px 0 rgba(0, 0, 0, 0.25);
   margin           : 2em;
+  min-width        : 200px;
   padding          : 20px;
+  width            : fit-content;
 
   & > div {
     margin : 20px 0;
@@ -43,7 +45,7 @@
 </style>
 
 <style lang="scss">
-@import '../../../style/base.scss';
+@use '../../../style/base.scss';
 </style>
 
 <script lang="ts" setup>

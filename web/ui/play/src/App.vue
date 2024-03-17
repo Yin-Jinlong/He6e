@@ -1,10 +1,6 @@
 <template>
-Hello World!
+    <router-view></router-view>
 </template>
-
-<style scoped lang="scss">
-
-</style>
 
 <script setup lang="ts">
 
