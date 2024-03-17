@@ -11,27 +11,34 @@ import typescript from "rollup-plugin-typescript2"
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
 
+import {out, outln, convertTime} from "./tools.ts";
+import {rollupProcessPlugin} from "./process-plugin.ts";
+
 ts.register()
 
-function out(...text: string[]) {
-    process.stdout.write(text.join(''))
-}
-
-function outln(...text: string[]) {
-    out(...text)
-    process.stdout.write('\n')
-}
-
+/**
+ * 输出命令（彩色）
+ * @param cmd 命令
+ * @param msg 消息
+ * @param ln 是否换行
+ */
 function outCmd(cmd: string, msg: string, ln: boolean = true) {
     out(chalk.cyan(cmd), msg)
     if (ln)
         process.stdout.write('\n')
 }
 
+/**
+ * 生成输出配置
+ *
+ * 从build.config.ts生成所有输出配置
+ *
+ * @return 输出配置
+ */
 function genOuts(): RollupOuts[] {
     let outs: RollupOuts[] = []
     for (const o of config.output) {
-        let jsName = o.ext ? `[name].${o.ext}` : '[name].js'
+        let jsName = `[name].${o.ext ?? 'js'}`
         outs.push({
             exports: "named",
             sourcemap: true,
@@ -45,10 +52,19 @@ function genOuts(): RollupOuts[] {
     return outs
 }
 
+/**
+ * 获取输出路径
+ *
+ * @return 输出路径
+ */
 function getOutPaths(): string[] {
     return config.output.map(o => o.dir)
 }
 
+/**
+ * 删除文件
+ * @param file 文件路径
+ */
 function del(file: fs.PathLike) {
     if (fs.existsSync(file)) {
         outln(chalk.red('delete '), chalk.yellow(file))
@@ -56,6 +72,9 @@ function del(file: fs.PathLike) {
     }
 }
 
+/**
+ * 删除输出目录
+ */
 function delOuts() {
     let outs = [config.dist, ...getOutPaths()]
     for (const path of outs) {
@@ -63,21 +82,28 @@ function delOuts() {
     }
 }
 
+/**
+ * 进度插件
+ *
+ * @return Rollup插件
+ */
 function processPlugin(): Plugin {
+    /**
+     * 清空行，并到行开头
+     */
     function lineStart() {
         readline.clearLine(process.stdout, 0)
         readline.cursorTo(process.stdout, 0)
     }
 
     let count = 0
-    return {
-        name: 'process',
-        transform(code: string, id: string) {
+    return rollupProcessPlugin({
+        transform(id: string) {
             let w = process.stdout.columns
             let head = `transform(${++count}) `
             let content = id
             let rw = w - head.length
-            if (content.length > rw)
+            if (content.length > rw) // 超出宽度
                 content = '...' + content.substring(content.length - rw + 3, content.length)
             lineStart()
             outCmd('transform', `(${count}) ${chalk.gray(content)}`, false)
@@ -86,10 +112,14 @@ function processPlugin(): Plugin {
             lineStart()
             outln(chalk.green('transformed '), chalk.greenBright(count.toString()), ' modules')
         }
-    } //as FunctionPluginHooks
+    })
 }
 
+/**
+ * 构建
+ */
 async function build() {
+    // 删除输出目录
     delOuts()
 
     outCmd('build', ' start...')
@@ -121,18 +151,11 @@ async function build() {
         ],
     })
 
+    // 输出
     outCmd('write', ' output...')
     for (const out of outs) {
         await buildOut.write(out)
     }
-}
-
-function convertTime(time: number): string {
-    let ms = time % 1000
-    time = Math.floor(time / 1000)
-    let s = time % 60
-    time = Math.floor(time / 60)
-    return time === 0 ? `${s}.${ms}s` : `${time}m${s}.${ms}s`
 }
 
 let startTime = Date.now()
