@@ -1,4 +1,7 @@
+export type YjlButtonType = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'emphasize'
+export type YjlButtonSize = 'default' | 'small' | 'large' | 'xlarge'
+
 export declare interface YjlButtonProps {
-    type?: 'default' | 'success'
-    size?: 'default' | 'small' | 'large' | 'xlarge'
+    type?: YjlButtonType
+    size?: YjlButtonSize
 }

@@ -4,8 +4,11 @@
             基础用法
         </template>
         <template #default>
-            <yjl-button>按钮</yjl-button>
-            <yjl-button type="success">成功</yjl-button>
+            <yjl-button v-for="(type,i) in types"
+                        :key="type"
+                        :type="type">
+                {{ typesTexts[i] }}
+            </yjl-button>
         </template>
     </yjl-card>
     <yjl-card>
@@ -13,28 +16,28 @@
             尺寸
         </template>
         <template #default>
-            <div>
-                <yjl-button size="small">按钮</yjl-button>
-                <yjl-button>按钮</yjl-button>
-                <yjl-button size="large">按钮</yjl-button>
-                <yjl-button size="xlarge">按钮</yjl-button>
-            </div>
-            <div>
-                <yjl-button size="small" type="success">按钮</yjl-button>
-                <yjl-button type="success">按钮</yjl-button>
-                <yjl-button size="large" type="success">按钮</yjl-button>
-                <yjl-button size="xlarge" type="success">按钮</yjl-button>
+            <div v-for="type in types">
+                <yjl-button v-for="size in sizes"
+                            :key="size"
+                            :size="size"
+                            :type="type">按钮
+                </yjl-button>
             </div>
         </template>
     </yjl-card>
 </template>
 
-<style scoped lang="scss">
-div+div{
-  margin-top: 1em;
+<style lang="scss" scoped>
+div + div {
+  margin-top : 1em;
 }
 </style>
 
-<script setup lang="ts">
-import {YjlButton, YjlCard} from '@ui'
+<script lang="ts" setup>
+import {YjlButton, YjlButtonSize, YjlButtonType, YjlCard} from '@ui'
+
+const sizes: YjlButtonSize[] = ['small', 'default', 'large', 'xlarge']
+const types: YjlButtonType[] = ['default', 'success', 'warning', 'danger', 'info', 'emphasize']
+const typesTexts: YjlButtonType[] = ['按钮', '成功', '警告', '危险', '信息', '强调']
+
 </script>

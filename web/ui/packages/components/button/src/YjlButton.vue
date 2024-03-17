@@ -5,7 +5,7 @@
             class="button"
             data-pointer
             data-transition>
-        按钮
+        <slot/>
     </button>
 </template>
 
@@ -20,12 +20,32 @@
 
 .button {
   @include gen-colors(primary);
-  background-color : var(--btn-color);
-  border           : none;
-  border-radius    : #{get-css(radius,normal)};
+  background-color    : var(--btn-color);
+  border              : none;
+  border-radius       : #{get-css(radius,normal)};
+  color               : white;
+  -moz-user-select    : none;
+  -webkit-user-select : none;
+  user-select         : none;
 
   &[data-type='success'] {
     @include gen-colors(sucsss);
+  }
+
+  &[data-type='warning'] {
+    @include gen-colors(warning);
+  }
+
+  &[data-type='danger'] {
+    @include gen-colors(danger);
+  }
+
+  &[data-type='info'] {
+    @include gen-colors(info);
+  }
+
+  &[data-type='emphasize'] {
+    @include gen-colors(emphasize);
   }
 
   &[data-size='small'] {
