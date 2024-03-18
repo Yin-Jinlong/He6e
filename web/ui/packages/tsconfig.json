@@ -11,12 +11,14 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "declaration": false,
-    "outDir": "../dist/@types",
+    "outDir": "../es",
     "skipLibCheck": true,
     "noEmit": false,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "rootDir": "."
   },
   "include": [
+    "./*.ts",
     "./components/*.ts",
     "./**/*.vue"
   ],
