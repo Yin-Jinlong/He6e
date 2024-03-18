@@ -1,6 +1,4 @@
-/**
- * 主要颜色集
- */
+// 主要颜色集
 $colors   : (
     'primary':#EB6,
     'sucsss':#8E8,
@@ -10,9 +8,7 @@ $colors   : (
     'emphasize':#86E,
 );
 
-/**
- * 边距集
- */
+// 边距集
 $paddings : (
     'small': 5px,
     'normal': 10px,
@@ -23,9 +19,7 @@ $paddings : (
     '4xl': 35px,
 );
 
-/**
- * 圆角集
- */
+// 圆角集
 $radius   : (
     'small': 5px,
     'normal': 10px,
