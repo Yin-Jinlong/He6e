@@ -6,11 +6,12 @@
          data-pointer
          data-relative
          data-transition-fast>
-        <div :data-status="status"
-             class="bg" data-absolute
-             data-fill-size
-             data-transition-fast>
-        </div>
+        <yjl-button :data-status="status"
+                    class="bg"
+                    data-absolute
+                    data-fill-size
+                    data-transition-fast>
+        </yjl-button>
         <div class="content"
              data-fill-size>
             {{ text }}
@@ -23,7 +24,8 @@
 </style>
 
 <script lang="ts" setup>
-import {SelectButtonProps} from "./select-button";
+import {YjlButton} from 'he6e-web-ui/es'
+import {SelectButtonProps} from "./select-button"
 
 defineProps<SelectButtonProps>()
 const emits = defineEmits(['click'])

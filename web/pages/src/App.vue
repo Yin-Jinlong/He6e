@@ -1,5 +1,5 @@
 <template>
-    <card class="card">
+    <yjl-card class="card">
         <template #header>
            title
         </template>
@@ -13,7 +13,7 @@
                 <select-button status="" text="D.1994"/>
             </div>
         </template>
-    </card>
+    </yjl-card>
 </template>
 
 <style lang="scss" scoped>
@@ -34,6 +34,6 @@
 
 <script lang="ts" setup>
 
-import {SelectButton} from "@components/select-button";
-import {Card} from "he6e-web-ui";
+import {SelectButton} from "@components/select-button"
+import {YjlCard} from "he6e-web-ui/es"
 </script>
