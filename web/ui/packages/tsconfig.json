@@ -14,8 +14,7 @@
     "outDir": "../dist/@types",
     "skipLibCheck": true,
     "noEmit": false,
-    "baseUrl": ".",
-    "allowImportingTsExtensions": true
+    "baseUrl": "."
   },
   "include": [
     "./components/*.ts",

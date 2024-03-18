@@ -4,11 +4,12 @@ import readline from 'readline'
 import chalk from 'chalk'
 
 import {OutputOptions as RollupOuts, Plugin, rollup} from 'rollup'
-import config from '../build.config.ts'
+import config from '../build.config'
 
-import {color, convertSize, convertTime, out, outln} from "./tools.ts"
-import {rollupProcessPlugin} from "./process-plugin.ts"
+import {color, convertSize, convertTime, out, outln} from "./tools"
+import {rollupProcessPlugin} from "./process-plugin"
 import {OutputOption} from 'build'
+import {execSync} from "child_process"
 
 
 const startTime = performance.now()
@@ -167,6 +168,9 @@ async function build() {
         await buildOut.write(out)
     }
     await buildOut.close
+
+    outln(color.cmd('build'), ' types...')
+    execSync('vue-tsc --declaration --emitDeclarationOnly')
 }
 
 build().then(() => {
