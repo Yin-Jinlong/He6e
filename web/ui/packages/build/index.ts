@@ -35,6 +35,10 @@ export declare interface BuildOptions {
      */
     dist: string
     /**
+     * 构建前删除dist，默认为true
+     */
+    deleteBeforeBuild?: boolean
+    /**
      * 是否保留模块
      */
     preserveModules?: boolean

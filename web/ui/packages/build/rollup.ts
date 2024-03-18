@@ -131,7 +131,8 @@ function processPlugin(): Plugin {
  */
 async function build() {
     // 删除输出目录
-    delOuts()
+    if (config.deleteBeforeBuild !== false)
+        delOuts()
 
     outln(color.cmd('build'), ' start...')
 
