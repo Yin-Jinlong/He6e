@@ -6,7 +6,7 @@
   "type": "module",
   "main": "lib/index.js",
   "module": "es/index.mjs",
-  "types": "es/index.d.ts",
+  "types": "dist/@types/index.d.ts",
   "scripts": {
     "dev": "pnpm -C play dev",
     "build": "pnpm -C packages build",
