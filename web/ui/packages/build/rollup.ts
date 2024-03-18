@@ -8,6 +8,7 @@ import config from '../build.config.ts'
 
 import {color, convertSize, convertTime, out, outln} from "./tools.ts"
 import {rollupProcessPlugin} from "./process-plugin.ts"
+import {OutputOption} from 'build'
 
 
 const startTime = performance.now()
@@ -21,7 +22,8 @@ const startTime = performance.now()
  */
 function genOuts(): RollupOuts[] {
     let outs: RollupOuts[] = []
-    for (const o of config.output) {
+
+    function add(o: OutputOption) {
         let jsName = `[name].${o.ext ?? 'js'}`
         outs.push({
             exports: "named",
@@ -33,6 +35,11 @@ function genOuts(): RollupOuts[] {
             preserveModules: config.preserveModules
         })
     }
+
+    if (Array.isArray(config.output))
+        config.output.forEach(add)
+    else
+        add(config.output)
     return outs
 }
 
@@ -42,7 +49,9 @@ function genOuts(): RollupOuts[] {
  * @return 输出路径
  */
 function getOutPaths(): string[] {
-    return config.output.map(o => o.dir)
+    if (Array.isArray(config.output))
+        return config.output.map(o => o.dir)
+    return [config.output.dir]
 }
 
 /**

@@ -41,7 +41,7 @@ export declare interface BuildOptions {
     /**
      * 输出选项
      */
-    output: OutputOption[]
+    output: OutputOption | OutputOption[]
     /**
      * rollup插件
      */
