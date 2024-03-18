@@ -27,7 +27,7 @@ function genOuts(): RollupOuts[] {
         let jsName = `[name].${o.ext ?? 'js'}`
         outs.push({
             exports: "named",
-            sourcemap: true,
+            sourcemap: o.sourceMap ?? false,
             entryFileNames: jsName,
             chunkFileNames: jsName,
             format: o.format,

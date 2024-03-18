@@ -15,7 +15,11 @@ export declare interface OutputOption {
     /**
      * 输出（js）文件扩展名，不需要加 .
      */
-    ext?: string
+    ext?: string,
+    /**
+     * 是否生成sourceMap，默认为false
+     */
+    sourceMap?: boolean | 'inline' | 'hidden'
 }
 
 /**
