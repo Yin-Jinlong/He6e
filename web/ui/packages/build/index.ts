@@ -1,4 +1,4 @@
-import {ModuleFormat} from 'rollup'
+import {ModuleFormat, Plugin} from 'rollup'
 
 /**
  * 输出选项
@@ -42,4 +42,8 @@ export declare interface BuildOptions {
      * 输出选项
      */
     output: OutputOption[]
+    /**
+     * rollup插件
+     */
+    plugins?: Plugin[]
 }

@@ -1,20 +1,13 @@
-import ts from 'ts-node'
 import fs from 'fs'
 import readline from 'readline'
 import chalk from 'chalk'
 
-import {rollup, Plugin, OutputOptions as RollupOuts, FunctionPluginHooks} from 'rollup'
+import {rollup, Plugin, OutputOptions as RollupOuts} from 'rollup'
 import config from '../build.config.ts'
-import vuePlugin from "@vitejs/plugin-vue"
-import postcss from "rollup-plugin-postcss"
-import typescript from "rollup-plugin-typescript2"
-import resolve from "@rollup/plugin-node-resolve"
-import commonjs from "@rollup/plugin-commonjs"
 
-import {out, outln, convertTime} from "./tools.ts";
-import {rollupProcessPlugin} from "./process-plugin.ts";
+import {out, outln, convertTime} from "./tools.ts"
+import {rollupProcessPlugin} from "./process-plugin.ts"
 
-ts.register()
 
 /**
  * 输出命令（彩色）
@@ -124,6 +117,9 @@ async function build() {
 
     outCmd('build', ' start...')
 
+    let plugins = [processPlugin()]
+    if (config.plugins)
+        plugins.push(...config.plugins)
     let outs = genOuts()
     let buildOut = await rollup({
         input: config.input,
@@ -131,24 +127,7 @@ async function build() {
             return /node_modules/.test(id);
         },
         output: outs,
-        plugins: [
-            vuePlugin({
-                isProduction: true,
-            }),
-            postcss({
-                extract: true,
-                extensions: ['.scss', '.sass'],
-            }),
-            typescript({
-                check: false,
-                tsconfigOverride: {
-                    allowImportingTsExtensions: false
-                }
-            }),
-            resolve(),
-            commonjs(),
-            processPlugin()
-        ],
+        plugins
     })
 
     // 输出
