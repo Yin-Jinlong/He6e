@@ -1,25 +1,16 @@
 import fs from 'fs'
+import {performance} from 'perf_hooks'
 import readline from 'readline'
 import chalk from 'chalk'
 
-import {rollup, Plugin, OutputOptions as RollupOuts} from 'rollup'
+import {OutputOptions as RollupOuts, Plugin, rollup} from 'rollup'
 import config from '../build.config.ts'
 
-import {out, outln, convertTime} from "./tools.ts"
+import {color, convertSize, convertTime, out, outln} from "./tools.ts"
 import {rollupProcessPlugin} from "./process-plugin.ts"
 
 
-/**
- * 输出命令（彩色）
- * @param cmd 命令
- * @param msg 消息
- * @param ln 是否换行
- */
-function outCmd(cmd: string, msg: string, ln: boolean = true) {
-    out(chalk.cyan(cmd), msg)
-    if (ln)
-        process.stdout.write('\n')
-}
+const startTime = performance.now()
 
 /**
  * 生成输出配置
@@ -60,7 +51,7 @@ function getOutPaths(): string[] {
  */
 function del(file: fs.PathLike) {
     if (fs.existsSync(file)) {
-        outln(chalk.red('delete '), chalk.yellow(file))
+        outln(color.danger('delete '), color.path(file))
         fs.rmSync(file, {recursive: true, force: true})
     }
 }
@@ -99,11 +90,29 @@ function processPlugin(): Plugin {
             if (content.length > rw) // 超出宽度
                 content = '...' + content.substring(content.length - rw + 3, content.length)
             lineStart()
-            outCmd('transform', `(${count}) ${chalk.gray(content)}`, false)
+            out(color.cmd('transform'), `(${count}) ${color.gray(content)}`)
         },
         buildEnd() {
             lineStart()
-            outln(chalk.green('transformed '), chalk.greenBright(count.toString()), ' modules')
+            outln(color.action('transformed '), color.num(count), ' modules')
+        },
+        writeBundle(files: string[]) {
+            let sizeAll = 0
+            files.forEach(f => {
+                let w = process.stdout.columns
+                out(chalk.yellow(f))
+                let {size} = fs.statSync(f)
+                sizeAll += size
+                let sizeStr = convertSize(size)
+                let sizeStrLen = sizeStr.size.toString().length + sizeStr.unit.length
+                // 如果空间不够了则换行
+                if (w - f.length % w < sizeStrLen + 1)
+                    outln()
+                readline.cursorTo(process.stdout, w - sizeStrLen)
+                outln(color.emphasize(sizeStr.size), sizeStr.unit)
+            })
+            let sizeStr = convertSize(sizeAll)
+            outln(color.action('written '), color.num(files.length), 'files, ', color.emphasize(sizeStr.size), sizeStr.unit)
         }
     })
 }
@@ -115,7 +124,7 @@ async function build() {
     // 删除输出目录
     delOuts()
 
-    outCmd('build', ' start...')
+    outln(color.cmd('build'), ' start...')
 
     let plugins = [processPlugin()]
     if (config.plugins)
@@ -131,14 +140,13 @@ async function build() {
     })
 
     // 输出
-    outCmd('write', ' output...')
     for (const out of outs) {
+        outln(color.cmd('write '), color.emphasize(out.format!), '...')
         await buildOut.write(out)
     }
+    await buildOut.close
 }
 
-let startTime = Date.now()
 build().then(() => {
-    let time = Date.now() - startTime
-    outln(chalk.yellow('took '), convertTime(time))
+    outln(color.action('took '), convertTime(performance.now() - startTime))
 })

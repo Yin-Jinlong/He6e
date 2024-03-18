@@ -1,6 +1,11 @@
+import path from "path"
+import {FunctionPluginHooks, NormalizedOutputOptions, OutputBundle, Plugin} from "rollup"
+
+
 export declare interface ProcessPluginHook {
     transform?: (id: string) => void
-    buildEnd?: () => void
+    buildEnd?: () => void,
+    writeBundle?: (files: string[]) => void
 }
 
 /**
@@ -15,6 +20,16 @@ export function rollupProcessPlugin(hook: ProcessPluginHook) {
         },
         buildEnd() {
             hook?.buildEnd?.call(this)
+        },
+        writeBundle(options: NormalizedOutputOptions, bundle: OutputBundle) {
+            if (!hook.writeBundle)
+                return
+            let files: string[] = []
+            Object.keys(bundle).forEach((key) => {
+                let dist = path.resolve(options.dir!, key)
+                files.push(path.relative('./', dist))
+            })
+            hook.writeBundle.call(this,  files)
         }
-    } // as FunctionPluginHooks
+    } as FunctionPluginHooks & Plugin
 }
