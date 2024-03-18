@@ -89,6 +89,23 @@ function processPlugin(): Plugin {
         readline.cursorTo(process.stdout, 0)
     }
 
+    /**
+     * 输出文件大小
+     *
+     * @param f 文件名
+     * @param size 文件大小
+     */
+    function outFileSize(f: string, size: number) {
+        let w = process.stdout.columns
+        let sizeStr = convertSize(size)
+        let sizeStrLen = sizeStr.size.toString().length + sizeStr.unit.length
+        // 如果空间不够了则换行
+        if (w - f.length % w < sizeStrLen + 1)
+            outln()
+        readline.cursorTo(process.stdout, w - sizeStrLen)
+        outln(color.emphasize(sizeStr.size), sizeStr.unit)
+    }
+
     let count = 0
     return rollupProcessPlugin({
         transform(id: string) {
@@ -108,17 +125,12 @@ function processPlugin(): Plugin {
         writeBundle(files: string[]) {
             let sizeAll = 0
             files.forEach(f => {
-                let w = process.stdout.columns
-                out(chalk.yellow(f))
                 let {size} = fs.statSync(f)
                 sizeAll += size
-                let sizeStr = convertSize(size)
-                let sizeStrLen = sizeStr.size.toString().length + sizeStr.unit.length
-                // 如果空间不够了则换行
-                if (w - f.length % w < sizeStrLen + 1)
-                    outln()
-                readline.cursorTo(process.stdout, w - sizeStrLen)
-                outln(color.emphasize(sizeStr.size), sizeStr.unit)
+                if (config.reportOutFileInfo !== false) {
+                    out(chalk.yellow(f))
+                    outFileSize(f, size)
+                }
             })
             let sizeStr = convertSize(sizeAll)
             outln(color.action('written '), color.num(files.length), 'files, ', color.emphasize(sizeStr.size), sizeStr.unit)

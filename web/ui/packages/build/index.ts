@@ -47,6 +47,10 @@ export declare interface BuildOptions {
      */
     output: OutputOption | OutputOption[]
     /**
+     * 报告输出文件详情，位置大小等，默认为true
+     */
+    reportOutFileInfo?: boolean
+    /**
      * rollup插件
      */
     plugins?: Plugin[]
