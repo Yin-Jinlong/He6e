@@ -1,7 +1,13 @@
-export type YjlButtonType = 'default' | 'success' | 'warning' | 'danger' | 'info' | 'emphasize'
+import {DefinedNamedColor} from "components/types"
+
+/**
+ * 按钮样式
+ */
+export type YjlButtonType = 'primary' | 'text' | 'plain'
 export type YjlButtonSize = 'default' | 'small' | 'large' | 'xlarge'
 
 export declare interface YjlButtonProps {
     type?: YjlButtonType
+    color?: string | DefinedNamedColor
     size?: YjlButtonSize
 }
