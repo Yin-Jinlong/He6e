@@ -1,34 +1,22 @@
 <template>
     <yjl-card>
         <template #header>
-            基础用法
+            基础用法和颜色
         </template>
         <template #default>
-            <yjl-button>
-                没有样式
-            </yjl-button>
-            <yjl-button
-                    v-for="(type,i) in types"
-                    :key="type"
-                    :type="type">
-                {{ typeTexts[i] }}
-            </yjl-button>
-        </template>
-    </yjl-card>
-    <yjl-card>
-        <template #header>
-            颜色
-        </template>
-        <template #default>
-            <div v-for="type in types">
-                <div style="display: grid; grid-template-columns: repeat(7,1fr);">
-                    <yjl-button v-for="(color,i) in colors"
-                                :key="color"
-                                :color="color"
-                                :type="type">
-                        {{ colorTexts[i] }}
-                    </yjl-button>
-                </div>
+            <div>
+                <yjl-button>
+                    没有样式
+                </yjl-button>
+            </div>
+            <div class="grid" v-for="(type,ti) in types">
+                <yjl-button
+                        v-for="(color,i) in colors"
+                        :key="type"
+                        :color="color"
+                        :type="type">
+                    {{ i === 0 ? typeTexts[ti] : colorTexts[i] }}
+                </yjl-button>
             </div>
         </template>
     </yjl-card>
@@ -52,6 +40,12 @@
 div + div {
   margin-top : 1em;
 }
+
+.grid {
+  display               : grid;
+  grid-template-columns : repeat(7, 1fr);
+}
+
 </style>
 
 <script lang="ts" setup>
