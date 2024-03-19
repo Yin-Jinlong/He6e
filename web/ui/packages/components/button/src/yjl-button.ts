@@ -10,4 +10,8 @@ export declare interface YjlButtonProps {
     type?: YjlButtonType
     color?: string | DefinedNamedColor
     size?: YjlButtonSize
+    /**
+     * 边框
+     */
+    border?: boolean
 }

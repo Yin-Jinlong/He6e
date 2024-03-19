@@ -1,6 +1,7 @@
 <template>
     <button
             ref="btn"
+            :data-border="border"
             :data-size="size"
             :data-type="type"
             class="button"
@@ -24,6 +25,7 @@ const btn = ref<HTMLButtonElement>()
 
 const props = withDefaults(defineProps<YjlButtonProps>(), {
     size: 'default',
+    border: false
 })
 
 

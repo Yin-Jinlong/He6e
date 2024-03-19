@@ -15,7 +15,7 @@
 .button {
   @include gen-colors(primary);
   background-color    : transparent;
-  border              : none;
+  border              : 0 none transparent;
   border-radius       : get-css(radius, normal);
   -moz-user-select    : none;
   -webkit-user-select : none;
@@ -45,8 +45,8 @@
   }
 
   &[data-type='text'] {
-    color            : var(--btn-color);
     background-color : white;
+    color            : var(--btn-color);
     padding          : 0;
 
     &:hover {
@@ -72,22 +72,37 @@
 
   }
 
-  &:not([data-type=text]) {
 
-    &[data-size='small'] {
-      padding : get-css(padding, small) get-css(padding, normal);
+  &[data-size='small'] {
+    padding : get-css(padding, small) get-css(padding, normal);
+  }
+
+  &[data-size='default'] {
+    padding : get-css(padding, normal) get-css(padding, large);
+  }
+
+  &[data-size='large'] {
+    padding : get-css(padding, normal) get-css(padding, xxl);
+  }
+
+  &[data-size='xlarge'] {
+    padding : get-css(padding, xlarge) get-css(padding, 4xl);
+  }
+
+  &[data-border='true'] {
+    border : 1px solid var(--btn-color--1);
+
+    &[data-type='primary'] {
+      border-color : var(--btn-color--2);
+      border-width : 2px;
     }
 
-    &[data-size='default'] {
-      padding : get-css(padding, normal) get-css(padding, large);
-    }
+    &[data-type='text'] {
+      border-color : var(--btn-color-3);
 
-    &[data-size='large'] {
-      padding : get-css(padding, normal) get-css(padding, xxl);
-    }
-
-    &[data-size='xlarge'] {
-      padding : get-css(padding, xlarge) get-css(padding, 4xl);
+      &:active {
+        border-color : var(--btn-color--1);
+      }
     }
   }
 
