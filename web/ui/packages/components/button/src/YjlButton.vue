@@ -2,6 +2,7 @@
     <button
             ref="btn"
             :data-border="border"
+            :data-shadow="shadow"
             :data-size="size"
             :data-type="type"
             class="button"
@@ -24,8 +25,10 @@ import {genColor} from "./color-tool"
 const btn = ref<HTMLButtonElement>()
 
 const props = withDefaults(defineProps<YjlButtonProps>(), {
+    type: 'primary',
     size: 'default',
-    border: false
+    border: false,
+    shadow: false,
 })
 
 

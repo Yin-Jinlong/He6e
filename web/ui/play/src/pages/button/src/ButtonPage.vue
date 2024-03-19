@@ -5,13 +5,19 @@
         </template>
         <template #default>
             <div>
-                <yjl-button>
+                <yjl-button type="">
                     没有样式
                 </yjl-button>
             </div>
             <div>
-                <span>边框</span>
-                <input v-model="border" type="checkbox">
+                <label>
+                    <span>边框</span>
+                    <input v-model="border" type="checkbox">
+                </label>
+                <label>
+                    <span>阴影</span>
+                    <input v-model="shadow" type="checkbox">
+                </label>
             </div>
             <div v-for="(type,ti) in types" class="grid">
                 <yjl-button
@@ -19,6 +25,7 @@
                         :key="type"
                         :border="border"
                         :color="color"
+                        :shadow="shadow"
                         :type="type">
                     {{ i === 0 ? typeTexts[ti] : colorTexts[i] }}
                 </yjl-button>
@@ -31,13 +38,20 @@
         </template>
         <template #default>
             <div>
-                <span>边框</span>
-                <input v-model="border" type="checkbox">
+                <label>
+                    <span>边框</span>
+                    <input v-model="border" type="checkbox">
+                </label>
+                <label>
+                    <span>阴影</span>
+                    <input v-model="shadow" type="checkbox">
+                </label>
             </div>
             <div v-for="type in types">
                 <yjl-button v-for="size in sizes"
                             :key="size"
                             :border="border"
+                            :shadow="shadow"
                             :size="size"
                             :type="type">按钮
                 </yjl-button>
@@ -70,5 +84,6 @@ const colors: DefinedNamedColor[] = ['primary', 'success', 'warning', 'danger', 
 const colorTexts: YjlButtonType[] = ['主要', '成功', '警告', '危险', '信息', '强调', '自定义']
 
 const border = ref(false)
+const shadow = ref(false)
 
 </script>

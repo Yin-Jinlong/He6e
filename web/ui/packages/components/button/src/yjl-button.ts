@@ -3,7 +3,7 @@ import {DefinedNamedColor} from "components/types"
 /**
  * 按钮样式
  */
-export type YjlButtonType = 'primary' | 'text' | 'plain'
+export type YjlButtonType = '' | 'primary' | 'text' | 'plain'
 export type YjlButtonSize = 'default' | 'small' | 'large' | 'xlarge'
 
 export declare interface YjlButtonProps {
@@ -14,4 +14,8 @@ export declare interface YjlButtonProps {
      * 边框
      */
     border?: boolean
+    /**
+     * 阴影
+     */
+    shadow?: boolean
 }

@@ -106,6 +106,14 @@
     }
   }
 
+  &[data-shadow='true'] {
+    box-shadow : color-mix(in srgb, var(--btn-color-2) 50%, transparent 50%) 0 0 10px;
+
+    &[data-type='primary'] {
+      box-shadow : color-mix(in srgb, var(--btn-color--2) 50%, transparent 50%) 0 0 10px;
+    }
+  }
+
 }
 
 .button + .button {
