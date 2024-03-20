@@ -35,5 +35,5 @@
 <script lang="ts" setup>
 
 import {SelectButton} from "@components/select-button"
-import {YjlCard} from "he6e-web-ui/es"
+import {YjlCard} from "he6e-web-ui"
 </script>

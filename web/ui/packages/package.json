@@ -4,9 +4,6 @@
   "description": "web ui库",
   "author": "Yin-Jinlong",
   "type": "module",
-  "main": "lib/index.js",
-  "module": "es/index.mjs",
-  "types": "es/index.d.ts",
   "scripts": {
     "dev": "cd .. && pnpm -C play dev",
     "build": "node build/builder.mjs",
@@ -36,43 +33,5 @@
   "dependencies": {
     "chroma-js": "^2.4.2",
     "vue": "^3.4.21"
-  },
-  "exports": {
-    ".": {
-      "types": "./es/index.d.ts",
-      "import": "./es/index.mjs",
-      "require": "./lib/index.js"
-    },
-    "./es": {
-      "types": "./es/index.d.ts",
-      "import": "./es/index.mjs"
-    },
-    "./lib": {
-      "types": "./lib/index.d.ts",
-      "require": "./lib/index.js"
-    },
-    "./es/*.mjs": {
-      "types": "./es/*.d.ts",
-      "import": "./es/*.mjs"
-    },
-    "./es/*": {
-      "types": [
-        "./es/*.d.ts",
-        "./es/*/index.d.ts"
-      ],
-      "import": "./es/*.mjs"
-    },
-    "./lib/*.js": {
-      "types": "./lib/*.d.ts",
-      "require": "./lib/*.js"
-    },
-    "./lib/*": {
-      "types": [
-        "./lib/*.d.ts",
-        "./lib/*/index.d.ts"
-      ],
-      "require": "./lib/*.js"
-    },
-    "./*": "./*"
   }
 }

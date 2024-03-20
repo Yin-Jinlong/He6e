@@ -1,6 +1,6 @@
 import {defineConfig} from 'vite'
-import vue from '@vitejs/plugin-vue'
-import path from "node:path";
+import vuePlugin from '@vitejs/plugin-vue'
+import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +18,6 @@ export default defineConfig({
         reportCompressedSize: false
     },
     plugins: [
-        vue()
+        vuePlugin()
     ],
 });

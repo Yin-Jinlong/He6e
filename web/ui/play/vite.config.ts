@@ -10,7 +10,8 @@ export default defineConfig({
     resolve:{
       alias: {
           '@ui':path.resolve('../packages'),
-          '@pages':path.resolve('src/pages')
+          '@pages':path.resolve('src/pages'),
+          'components':path.resolve('../packages/components')
       }
     },
     plugins: [

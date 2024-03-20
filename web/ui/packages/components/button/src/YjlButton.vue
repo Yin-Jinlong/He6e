@@ -17,7 +17,7 @@
 </style>
 
 <script lang="ts" setup>
-import {YjlButtonProps} from "./yjl-button"
+import {YjlButtonProps} from "components"
 import {onMounted, ref, watch} from "vue"
 import {DefinedNamedColor} from "components/types"
 import {genColor} from "./color-tool"

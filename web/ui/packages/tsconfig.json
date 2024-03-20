@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "../es",
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "components": ["./components"],
+      "components/*": ["./components/*"],
+    }
   },
   "include": [
     "./index.ts",

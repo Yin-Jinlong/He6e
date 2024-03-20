@@ -33,7 +33,14 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5(@types/node@20.11.25)(sass@1.71.1)
 
-  ui: {}
+  ui:
+    dependencies:
+      chroma-js:
+        specifier: ^2.4.2
+        version: 2.4.2
+      vue:
+        specifier: ^3.4.21
+        version: 3.4.21(typescript@5.4.2)
 
   ui/packages:
     dependencies:
