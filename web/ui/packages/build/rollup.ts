@@ -3,13 +3,13 @@ import {performance} from 'perf_hooks'
 import readline from 'readline'
 import chalk from 'chalk'
 
-import {OutputOptions as RollupOuts, Plugin, rollup} from 'rollup'
+import {OutputOptions, Plugin, rollup} from 'rollup'
 import config from '../build.config'
 
 import {color, convertSize, convertTime, out, outln} from "./tools"
 import {rollupProcessPlugin} from "./process-plugin"
-import {OutputOption} from 'build'
-import {execSync} from "child_process"
+import {OutputOption} from '.'
+import {spawn} from "child_process"
 
 
 const startTime = performance.now()
@@ -21,8 +21,8 @@ const startTime = performance.now()
  *
  * @return 输出配置
  */
-function genOuts(): RollupOuts[] {
-    let outs: RollupOuts[] = []
+function genOuts(): OutputOptions[] {
+    let outs: OutputOptions[] = []
 
     function add(o: OutputOption) {
         let jsName = `[name].${o.ext ?? 'js'}`
@@ -51,7 +51,7 @@ function genOuts(): RollupOuts[] {
  */
 function getOutPaths(): string[] {
     if (Array.isArray(config.output))
-        return config.output.map(o => o.dir)
+        return config.output.map((o:OutputOption )=> o.dir)
     return [config.output.dir]
 }
 
@@ -167,10 +167,14 @@ async function build() {
         outln(color.cmd('write '), color.emphasize(out.format!), '...')
         await buildOut.write(out)
     }
-    await buildOut.close
+    await buildOut.close()
 
     outln(color.cmd('build'), ' types...')
-    execSync('vue-tsc --declaration --emitDeclarationOnly')
+
+    spawn('vue-tsc --declaration --emitDeclarationOnly', {
+        shell: true,
+        stdio: 'inherit'
+    })
 }
 
 build().then(() => {

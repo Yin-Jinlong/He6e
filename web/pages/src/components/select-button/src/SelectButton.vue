@@ -2,7 +2,7 @@
     <div data-fill-width>
         <yjl-button
                 class="sb"
-                type="none"
+                type=""
                 style="padding: 1em 5px"
                 data-fill-width>
             {{ text }}
@@ -40,7 +40,6 @@
 <script lang="ts" setup>
 import {YjlButton} from "he6e-web-ui/es"
 import {SelectButtonProps} from "./select-button"
-import c from "chroma-js"
 
 defineProps<SelectButtonProps>();
 </script>

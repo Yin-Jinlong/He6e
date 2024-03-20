@@ -1,28 +1,14 @@
 {
+  "extends": "../tsconfig.web.ui.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "declaration": false,
     "outDir": "../es",
-    "skipLibCheck": true,
-    "noEmit": false,
     "baseUrl": ".",
     "rootDir": "."
   },
   "include": [
-    "./*.ts",
+    "./index.ts",
     "./components/*.ts",
-    "./**/*.vue"
-  ],
-  "exclude": [
-    "./build"
+    "./components/**/*.ts",
+    "./components/**/*.vue"
   ]
 }

@@ -10,7 +10,7 @@ import terser from "@rollup/plugin-terser"
 
 let outFile = ''
 
-async function builder() {
+async function build() {
     const out = await rollup({
         input: 'build/rollup.ts',
         external(id) {
@@ -19,6 +19,11 @@ async function builder() {
         plugins: [
             json(),
             typescript({
+                exclude: [
+                    'components/*',
+                    'components/**/*',
+                    'index.ts'
+                ],
                 tsconfigOverride: {
                     compilerOptions: {
                         sourceMap: true
@@ -47,8 +52,12 @@ async function builder() {
     await out.close()
 }
 
-builder().then(async () => {
+build().then(async () => {
     await import('file://' + outFile)
+}).catch(e => {
+    console.error(e)
+    process.exit(1)
 }).finally(() => {
-    fs.rmSync(outFile)
+    if (fs.existsSync(outFile))
+        fs.rmSync(outFile)
 })

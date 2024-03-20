@@ -12,6 +12,8 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": false,
-    "composite": true
+    "composite": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true
   }
 }

@@ -1,4 +1,4 @@
-import {BuildOptions} from 'build'
+import {BuildOptions} from './build'
 import vuePlugin from "@vitejs/plugin-vue";
 import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
