@@ -29,37 +29,11 @@
 ### 安装
 
 ```shell
-pnpm i && pnpm -C web i
-```
-
-### 开发
-
-对于页面（需要先构建`ui`）
-
-```shell
-pnpm run dev:pages
-```
-
-对于ui
-
-```shell
-pnpm run dev:ui
+pnpm -C web i
 ```
 
 ### 构建
 
 ```shell
 pnpm run build
-```
-
-对于页面（需要先构建`ui`）
-
-```shell
-pnpm run build:pages
-```
-
-对于ui
-
-```shell
-pnpm run build:ui
 ```

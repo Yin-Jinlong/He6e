@@ -1,3 +1,6 @@
 @use 'var' as *;
 
-@import '../node_modules/he6e-web-ui/es/index.css';
+@import 'h-ui/es/index.css';
+@import 'h-ui/style/src/base';
+@import 'h-ui/style/src/button';
+//@import 'h-ui/style/src/c';

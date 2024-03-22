@@ -17,7 +17,7 @@
     "vite": "^5.1.5"
   },
   "dependencies": {
-    "he6e-web-ui": "link:..\\ui",
+    "h-ui": "link:../../../h-ui/dist",
     "vue": "^3.4.21"
   }
 }

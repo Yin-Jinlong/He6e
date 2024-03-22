@@ -2,6 +2,7 @@
   "extends": "../tsconfig.web.base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "composite": true,
     "paths": {
       "@": ["./src/"],
       "@components": ["./src/components"],
@@ -12,11 +13,8 @@
     "./src/*.ts",
     "./src/**/*.ts",
     "./src/*.vue",
-    "./src/**/*.vue"
-  ],
-  "references": [
-    {
-      "path": "../ui/packages/tsconfig.json"
-    }
+    "./src/**/*.vue",
+    "../../../h-ui/packages/*.ts",
+    "../../../h-ui/packages/**/*.vue"
   ]
 }
