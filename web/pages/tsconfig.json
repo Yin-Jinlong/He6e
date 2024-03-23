@@ -5,6 +5,7 @@
     "composite": true,
     "paths": {
       "@": ["./src/"],
+      "@/*": ["./src/*"],
       "@components": ["./src/components"],
       "@components/*": ["./src/components/*"]
     }
@@ -13,8 +14,6 @@
     "./src/*.ts",
     "./src/**/*.ts",
     "./src/*.vue",
-    "./src/**/*.vue",
-    "../../../h-ui/packages/*.ts",
-    "../../../h-ui/packages/**/*.vue"
+    "./src/**/*.vue"
   ]
 }
