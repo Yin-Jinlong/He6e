@@ -1,7 +1,27 @@
 <template>
-    <select-card :confirm="false"
-                 :ti="ti"
-                 type="radio"/>
+    <h-card>
+        <template #header>
+            设置
+        </template>
+        <template #default>
+            <label>
+                <span>确认提交</span>
+                <input v-model="confirm" type="checkbox">
+            </label>
+            <h-button
+                    :type="'primary'"
+                    :color="'danger'"
+                    @click="reset">
+                重置
+            </h-button>
+        </template>
+    </h-card>
+
+    <select-card
+            ref="tiCard"
+            :confirm="confirm"
+            :ti="ti"
+            type="radio"/>
 </template>
 
 <style lang="scss" scoped>
@@ -10,8 +30,11 @@
 
 <script lang="ts" setup>
 
-import {SelectCard} from "@components/select-card";
-import {SelectTi} from "@/types";
+import {ref} from "vue"
+import {SelectCard, SelectCardExpose} from "@components/select-card"
+import {SelectTi} from "@/types"
+
+import {HButton, HCard} from 'h-ui'
 
 const ti = {
     title: '新中国成立在（）',
@@ -31,5 +54,12 @@ const ti = {
         }
     ]
 } as SelectTi<string>
+
+const confirm = ref(false)
+const tiCard = ref<SelectCardExpose>()
+
+function reset() {
+    tiCard.value!.reset()
+}
 
 </script>

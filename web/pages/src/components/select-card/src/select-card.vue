@@ -45,11 +45,11 @@
 
 <script lang="ts" setup>
 
+import {ref} from "vue"
 import {HButton, HCard} from 'h-ui'
-import {SelectCardProps} from "./select-card"
-import {SelectButton, SelectButtonStatus} from "@components/select-button";
-import {ref} from "vue";
-import {TiOption} from "@/types";
+import {SelectCardExpose, SelectCardProps} from "./select-card"
+import {SelectButton, SelectButtonStatus} from "@components/select-button"
+import {TiOption} from "@/types"
 
 const props = defineProps<SelectCardProps>()
 const show = ref(false)
@@ -60,7 +60,7 @@ function toStatus(o: TiOption<string>): SelectButtonStatus {
         return selects.value.has(o) ? 'selected' : ''
     }
     if (o.right)
-        return 'success'
+        return selects.value.has(o) ? 'success' : 'half-right'
     else if (selects.value.has(o))
         return 'failed'
     return ''
@@ -69,11 +69,25 @@ function toStatus(o: TiOption<string>): SelectButtonStatus {
 function addSelect(o: TiOption<string>) {
     if (show.value)
         return
-    if (props.type === 'radio')
-        selects.value.clear()
-    selects.value.add(o)
+
+    if (selects.value.has(o)) {
+        selects.value.delete(o)
+    } else {
+        if (props.type === 'radio')
+            selects.value.clear()
+        selects.value.add(o)
+    }
     if (!props.confirm)
         show.value = true
 }
+
+function reset() {
+    selects.value.clear()
+    show.value = false
+}
+
+defineExpose<SelectCardExpose>({
+    reset
+})
 
 </script>

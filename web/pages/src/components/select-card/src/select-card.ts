@@ -7,3 +7,7 @@ export declare interface SelectCardProps {
     confirm: boolean
     ti: SelectTi<string>
 }
+
+export declare interface SelectCardExpose {
+    reset(): void
+}
