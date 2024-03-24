@@ -17,7 +17,7 @@
         </template>
         <template #footer>
             <div>
-                <h-button v-if="(confirm||type==='multi')&&!show"
+                <h-button v-if="(confirm||!isRadioType())&&!show"
                           :border="true"
                           :type="'plain'"
                           @click="show=true"
@@ -48,7 +48,7 @@
 
 import {ref, watch} from "vue"
 import {HButton, HCard} from 'h-ui'
-import {SelectCardExpose, SelectCardProps, SelectCardType} from "./select-card"
+import {SelectCardExpose, SelectCardProps} from "./select-card"
 import {SelectButton, SelectButtonStatus} from "@components/select-button"
 import {JudgeTi, SelectTi, TiOption} from "@/types"
 
@@ -68,7 +68,23 @@ function toStatus(o: TiOption<string>): SelectButtonStatus {
     return ''
 }
 
-const radioTypes: SelectCardType[] = ['radio', 'judge'] as const
+function isRadioType(): boolean {
+    let {ti} = props
+    if (ti.type === 'judge')
+        return true
+    else if (ti.type === 'select') {
+        let has = false
+        for (const o of (ti as SelectTi<string>).options) {
+            if (o.right) {
+                if (has)
+                    return false
+                has = true
+            }
+        }
+        return true
+    }
+    return false
+}
 
 function addSelect(o: TiOption<string>) {
     if (show.value)
@@ -77,11 +93,11 @@ function addSelect(o: TiOption<string>) {
     if (selects.value.has(o)) {
         selects.value.delete(o)
     } else {
-        if (radioTypes.includes(props.type))
+        if (isRadioType())
             selects.value.clear()
         selects.value.add(o)
     }
-    if (!props.confirm && radioTypes.includes(props.type))
+    if (!props.confirm && isRadioType())
         show.value = true
 }
 
@@ -95,6 +111,8 @@ defineExpose<SelectCardExpose>({
 })
 
 watch(() => props.ti, (ti) => {
+    reset()
+    options.value.length = 0
     switch (ti.type) {
         case "select":
             let os = (ti as SelectTi<string>).options

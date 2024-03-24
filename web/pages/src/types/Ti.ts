@@ -1,5 +1,8 @@
+export type TiType = 'select' | 'judge'
+
 export interface Ti {
-    type: 'select' | 'judge'
+    type: TiType
+    title: string
 }
 
 export declare interface TiOption<T> {
@@ -9,12 +12,10 @@ export declare interface TiOption<T> {
 
 export declare interface SelectTi<T> extends Ti {
     type: 'select'
-    title: string
     options: TiOption<T>[]
 }
 
 export declare interface JudgeTi extends Ti {
     type: 'judge'
-    title: string
     right?: boolean
 }

@@ -1,11 +1,9 @@
-import {JudgeTi, SelectTi} from "@/types";
+import {Ti} from "@/types";
 
-export type SelectCardType = 'radio' | 'multi' | 'judge'
 
 export declare interface SelectCardProps {
-    type: SelectCardType
     confirm: boolean
-    ti: SelectTi<string> | JudgeTi
+    ti: Ti
 }
 
 export declare interface SelectCardExpose {
