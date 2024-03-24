@@ -21,7 +21,7 @@
             ref="tiCard"
             :confirm="confirm"
             :ti="ti"
-            type="radio"/>
+            type="multi"/>
 </template>
 
 <style lang="scss" scoped>
@@ -37,20 +37,22 @@ import {SelectTi} from "@/types"
 import {HButton, HCard} from 'h-ui'
 
 const ti = {
-    title: '新中国成立在（）',
+    title: '那个数字小于10（）',
     options: [
         {
-            content: '1949.10.1',
+            content: '5',
             right: true
         },
         {
-            content: '1959.7.1'
+            content: '6',
+            right:true
         },
         {
-            content: '1969.8.1'
+            content: '11'
         },
         {
-            content: '1994.1.1'
+            content: '2',
+            right:true
         }
     ]
 } as SelectTi<string>

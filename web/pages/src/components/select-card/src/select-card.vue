@@ -16,7 +16,7 @@
         </template>
         <template #footer>
             <div>
-                <h-button v-if="confirm&&type!=='multi'&&!show"
+                <h-button v-if="(confirm||type==='multi')&&!show"
                           :border="true"
                           :type="'plain'"
                           @click="show=true"
@@ -77,7 +77,7 @@ function addSelect(o: TiOption<string>) {
             selects.value.clear()
         selects.value.add(o)
     }
-    if (!props.confirm)
+    if (!props.confirm && props.type === 'radio')
         show.value = true
 }
 
