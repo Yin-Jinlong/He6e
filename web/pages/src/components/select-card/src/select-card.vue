@@ -31,7 +31,7 @@
 
 <style lang="scss" scoped>
 .card {
-  width : 600px;
+  box-sizing : border-box;
 }
 
 .select-box {

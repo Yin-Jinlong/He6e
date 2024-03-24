@@ -1,48 +1,80 @@
 <template>
-    <h-card>
-        <template #header>
-            设置
-        </template>
-        <template #default>
-            <label>
-                <span>确认提交</span>
-                <input v-model="confirm" type="checkbox">
-            </label>
-            <h-button
-                    :color="'danger'"
-                    :type="'primary'"
-                    @click="reset">
-                重置
-            </h-button>
-            <h-button
-                    :for="'file'"
-                    :type="'primary'"
-                    @click="load">
-                <input @change="onChangeFile" ref="fileInput" style="display: none" type="file">
-                加载题目
-            </h-button>
-        </template>
-    </h-card>
-
-    <select-card
-            v-if="tis.length"
-            ref="tiCard"
-            :confirm="confirm"
-            :ti="tis[tiI]"/>
-    <div>
-        <h-button
-                :type="'primary'"
-                @click="goTi(-1)">上一题
-        </h-button>
-        <h-button
-                :type="'primary'"
-                @click="goTi(1)">下一题
-        </h-button>
+    <div data-flex style="min-width: 700px;max-height: 100%">
+        <div data-flex-column style="width: 30%;min-width: 300px;max-height: 100%">
+            <h-card>
+                <template #header>
+                    设置
+                </template>
+                <template #default>
+                    <label>
+                        <span>确认提交</span>
+                        <input v-model="confirm" type="checkbox">
+                    </label>
+                    <h-button
+                            :color="'danger'"
+                            :type="'primary'"
+                            @click="reset">
+                        重置
+                    </h-button>
+                    <h-button
+                            :for="'file'"
+                            :type="'primary'"
+                            @click="load">
+                        <input ref="fileInput" style="display: none" type="file" @change="onChangeFile">
+                        加载题目
+                    </h-button>
+                </template>
+            </h-card>
+            <div class="ti-indexes-box">
+                <div v-for="i in tis.length">
+                    <h-button
+                            :border="true"
+                            :type="(tiI+1)===i?'primary':''"
+                            style="box-sizing: border-box;border-width: 2px"
+                            @click="tiI=i-1">
+                        {{ i }}
+                    </h-button>
+                </div>
+            </div>
+        </div>
+        <div data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
+            <select-card
+                    v-if="tis.length"
+                    ref="tiCard"
+                    :confirm="confirm"
+                    :ti="tis[tiI]"
+                    data-fill-width/>
+            <div>
+                <h-button
+                        :type="'primary'"
+                        @click="goTi(-1)">上一题
+                </h-button>
+                <h-button
+                        :type="'primary'"
+                        @click="goTi(1)">下一题
+                </h-button>
+            </div>
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-
+.ti-indexes-box {
+  align-items           : center;
+  background-color      : #fefefe;
+  border-radius         : 10px;
+  box-shadow            : 0 0 10px rgba(0, 0, 0, 0.2);
+  display               : grid;
+  flex                  : 1;
+  gap                   : 5px;
+  grid-template-columns : repeat(auto-fill, minmax(60px, auto));
+  height                : max-content;
+  justify-content       : space-around;
+  justify-items         : center;
+  margin                : 5px;
+  overflow-y            : auto;
+  padding               : 5px;
+}
 </style>
 
 <script lang="ts" setup>
