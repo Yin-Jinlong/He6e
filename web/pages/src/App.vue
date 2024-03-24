@@ -21,7 +21,7 @@
             ref="tiCard"
             :confirm="confirm"
             :ti="ti"
-            type="multi"/>
+            type="judge"/>
 </template>
 
 <style lang="scss" scoped>
@@ -32,30 +32,15 @@
 
 import {ref} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
-import {SelectTi} from "@/types"
+import {JudgeTi} from "@/types"
 
 import {HButton, HCard} from 'h-ui'
 
 const ti = {
-    title: '那个数字小于10（）',
-    options: [
-        {
-            content: '5',
-            right: true
-        },
-        {
-            content: '6',
-            right:true
-        },
-        {
-            content: '11'
-        },
-        {
-            content: '2',
-            right:true
-        }
-    ]
-} as SelectTi<string>
+    type: 'judge',
+    title: '5>10',
+    right: false
+} as JudgeTi
 
 const confirm = ref(false)
 const tiCard = ref<SelectCardExpose>()

@@ -7,11 +7,12 @@
             <div class="select-box"
                  data-fill-width
                  data-flex>
-                <select-button v-for="(o,i) in ti.options"
-                               :i="i"
-                               :status="toStatus(o)"
-                               :text="o.content"
-                               @click="addSelect(o)"/>
+                <select-button
+                        v-for="(o,i) in options"
+                        :i="i"
+                        :status="toStatus(o)"
+                        :text="o.content"
+                        @click="addSelect(o)"/>
             </div>
         </template>
         <template #footer>
@@ -45,15 +46,16 @@
 
 <script lang="ts" setup>
 
-import {ref} from "vue"
+import {ref, watch} from "vue"
 import {HButton, HCard} from 'h-ui'
-import {SelectCardExpose, SelectCardProps} from "./select-card"
+import {SelectCardExpose, SelectCardProps, SelectCardType} from "./select-card"
 import {SelectButton, SelectButtonStatus} from "@components/select-button"
-import {TiOption} from "@/types"
+import {JudgeTi, SelectTi, TiOption} from "@/types"
 
 const props = defineProps<SelectCardProps>()
 const show = ref(false)
 const selects = ref<Set<TiOption<string>>>(new Set())
+const options = ref<TiOption<string>[]>([])
 
 function toStatus(o: TiOption<string>): SelectButtonStatus {
     if (!show.value) {
@@ -66,6 +68,8 @@ function toStatus(o: TiOption<string>): SelectButtonStatus {
     return ''
 }
 
+const radioTypes: SelectCardType[] = ['radio', 'judge'] as const
+
 function addSelect(o: TiOption<string>) {
     if (show.value)
         return
@@ -73,11 +77,11 @@ function addSelect(o: TiOption<string>) {
     if (selects.value.has(o)) {
         selects.value.delete(o)
     } else {
-        if (props.type === 'radio')
+        if (radioTypes.includes(props.type))
             selects.value.clear()
         selects.value.add(o)
     }
-    if (!props.confirm && props.type === 'radio')
+    if (!props.confirm && radioTypes.includes(props.type))
         show.value = true
 }
 
@@ -88,6 +92,30 @@ function reset() {
 
 defineExpose<SelectCardExpose>({
     reset
+})
+
+watch(() => props.ti, (ti) => {
+    switch (ti.type) {
+        case "select":
+            let os = (ti as SelectTi<string>).options
+            os.forEach(o => {
+                options.value.push(o)
+            })
+            break
+        case "judge":
+            let r = (ti as JudgeTi).right
+            options.value.push({
+                content: '对',
+                right: r
+            })
+            options.value.push({
+                content: '错',
+                right: !r
+            })
+            break
+    }
+}, {
+    immediate: true
 })
 
 </script>
