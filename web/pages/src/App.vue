@@ -14,10 +14,18 @@
                     @click="reset">
                 重置
             </h-button>
+            <h-button
+                    :for="'file'"
+                    :type="'primary'"
+                    @click="load">
+                <input @change="onChangeFile" ref="fileInput" style="display: none" type="file">
+                加载题目
+            </h-button>
         </template>
     </h-card>
 
     <select-card
+            v-if="tis.length"
             ref="tiCard"
             :confirm="confirm"
             :ti="tis[tiI]"/>
@@ -39,62 +47,18 @@
 
 <script lang="ts" setup>
 
-import {ref} from "vue"
+import {reactive, ref} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
-import {JudgeTi, SelectTi, Ti} from "@/types"
+import {parseTi, Ti, TiJson} from "@/types"
 
 import {HButton, HCard} from 'h-ui'
 
-const tis: Ti[] = [
-    {
-        type: 'select',
-        title: '1+1=',
-        options: [
-            {
-                content: '3'
-            },
-            {
-                content: '2',
-                right: true
-            },
-            {
-                content: '1'
-            },
-            {
-                content: '4'
-            }
-        ]
-    } as SelectTi<string>,
-    {
-        type: 'select',
-        title: '10>()',
-        options: [
-            {
-                content: '1',
-                right: true
-            },
-            {
-                content: '12',
-            },
-            {
-                content: '5',
-                right: true
-            },
-            {
-                content: '10'
-            }
-        ]
-    } as SelectTi<string>,
-    {
-        type: 'judge',
-        title: '3>2',
-        right: false
-    } as JudgeTi
-] as const
+const tis = reactive<Ti[]>([])
 
 const tiI = ref(0)
 const confirm = ref(false)
 const tiCard = ref<SelectCardExpose>()
+const fileInput = ref<HTMLInputElement>()
 
 function reset() {
     tiCard.value!.reset()
@@ -107,6 +71,36 @@ function goTi(di: number) {
     else if (i >= tis.length)
         i = tis.length - 1
     tiI.value = i
+}
+
+function load() {
+    fileInput.value?.showPicker()
+}
+
+function addTi(ti: Ti | any) {
+    let t = parseTi(ti)
+    if (t)
+        tis.push(t)
+}
+
+function onChangeFile(e: Event) {
+    const {files} = fileInput.value!
+    if (!files || files.length === 0)
+        return
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (file.type !== 'application/json')
+            continue
+        const reader = new FileReader()
+        reader.onload = function (e: ProgressEvent) {
+            tis.length = 0
+            const tiJson = JSON.parse((e.target as FileReader).result as string) as TiJson
+            if (tiJson.data && Array.isArray(tiJson.data)) {
+                tiJson.data.forEach(addTi)
+            }
+        }
+        reader.readAsText(file)
+    }
 }
 
 </script>
