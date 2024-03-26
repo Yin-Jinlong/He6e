@@ -1,31 +1,40 @@
 <template>
-    <div data-flex style="min-width: 700px;max-height: 100%">
+    <div data-fill-size data-flex style="min-width: 700px;">
         <div data-flex-column style="width: 30%;min-width: 300px;max-height: 100%">
             <h-card>
                 <template #header>
                     设置
                 </template>
                 <template #default>
-                    <label>
-                        <span>确认提交</span>
-                        <input v-model="confirm" type="checkbox">
-                    </label>
-                    <h-button
-                            :color="'danger'"
-                            :type="'primary'"
-                            @click="reset">
-                        重置
-                    </h-button>
-                    <h-button
-                            :for="'file'"
-                            :type="'primary'"
-                            @click="load">
-                        <input ref="fileInput" style="display: none" type="file" @change="onChangeFile">
-                        加载题目
-                    </h-button>
+                    <div class="box">
+                        <h-check-box v-model="dark" @click="changeTheme">
+                            暗色
+                        </h-check-box>
+                    </div>
+                    <div class="box">
+                        <h-check-box v-model="confirm">
+                            确认提交
+                        </h-check-box>
+                    </div>
+                    <div class="box">
+                        <h-button
+                                :color="'danger'"
+                                :disabled="tis.length<1"
+                                :type="'primary'"
+                                @click="reset">
+                            重置
+                        </h-button>
+                        <h-button
+                                :for="'file'"
+                                :type="'primary'"
+                                @click="load">
+                            <input ref="fileInput" style="display: none" type="file" @change="onChangeFile">
+                            加载题目
+                        </h-button>
+                    </div>
                 </template>
             </h-card>
-            <div class="ti-indexes-box">
+            <div v-if="tis.length" class="ti-indexes-box">
                 <div v-for="i in tis.length">
                     <h-button
                             :border="true"
@@ -37,9 +46,9 @@
                 </div>
             </div>
         </div>
-        <div data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
+        <div v-if="tis.length"
+             data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
             <select-card
-                    v-if="tis.length"
                     ref="tiCard"
                     :confirm="confirm"
                     :ti="tis[tiI]"
@@ -60,21 +69,25 @@
 
 <style lang="scss" scoped>
 .ti-indexes-box {
-  align-items           : center;
-  background-color      : #fefefe;
+  align-items           : start;
+  background-color      : var(--h-color-background-simple);
   border-radius         : 10px;
-  box-shadow            : 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow            : 0 0 10px rgba(128, 128, 128, 0.2);
   display               : grid;
   flex                  : 1;
   gap                   : 5px;
   grid-template-columns : repeat(auto-fill, minmax(60px, auto));
-  height                : max-content;
   justify-content       : space-around;
   justify-items         : center;
   margin                : 5px;
   overflow-y            : auto;
   padding               : 5px;
 }
+
+.box {
+  margin : 0.5em 0;
+}
+
 </style>
 
 <script lang="ts" setup>
@@ -83,12 +96,13 @@ import {reactive, ref} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
-import {HButton, HCard} from 'h-ui'
+import {HButton, HCard, HCheckBox} from 'h-ui'
 
 const tis = reactive<Ti[]>([])
 
 const tiI = ref(0)
 const confirm = ref(false)
+const dark = ref(false)
 const tiCard = ref<SelectCardExpose>()
 const fileInput = ref<HTMLInputElement>()
 
@@ -132,6 +146,48 @@ function onChangeFile(e: Event) {
             }
         }
         reader.readAsText(file)
+    }
+}
+
+
+function change() {
+    const root = document.documentElement
+    let isDark = root.hasAttribute('dark')
+    if (isDark)
+        root.removeAttribute('dark')
+    else
+        root.setAttribute('dark', '')
+    dark.value = !isDark
+}
+
+function changeTheme(e: MouseEvent) {
+    const x = e.clientX;
+    const y = e.clientY;
+    const endRadius = Math.hypot(
+        Math.max(x, innerWidth - x),
+        Math.max(y, innerHeight - y)
+    )
+
+    if (document.startViewTransition) {
+        const transition = document.startViewTransition(change)
+        transition.ready.then(() => {
+            const clipPath = [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`,
+            ];
+            document.documentElement.animate(
+                {
+                    clipPath: clipPath,
+                },
+                {
+                    duration: 400,
+                    easing: "ease-out",
+                    pseudoElement: "::view-transition-new(root)",
+                }
+            )
+        })
+    } else {
+        change()
     }
 }
 

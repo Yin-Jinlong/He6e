@@ -1,8 +1,24 @@
 @use 'var' as *;
 
-@import 'h-ui/style/css/index.css';
 @import 'h-ui/style/src/base';
+@import 'h-ui/style/src/base-dark';
 @import 'h-ui/style/src/button';
+@import 'h-ui/style/src/check-box';
+@import 'h-ui/style/src/card';
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation      : none;
+  mix-blend-mode : normal;
+}
+
+.dark::view-transition-old(root) {
+  z-index : 1;
+}
+
+.dark::view-transition-new(root) {
+  z-index : 2;
+}
 
 html, body {
   height   : 100vh;
