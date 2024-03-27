@@ -1,16 +1,22 @@
 <template>
     <div data-fill-size data-flex style="min-width: 700px;">
         <div data-flex-column style="width: 30%;min-width: 300px;max-height: 100%">
+            <transition name="config">
+                <h-card v-if="showConfigs">
+                    <template #header>
+                        设置
+                    </template>
+                    <template #default>
+                        <div v-for="c in configCheckBoxes" class="box">
+                            <h-check-box v-model="configs[c.model]" @click="c.click">
+                                {{ c.label }}
+                            </h-check-box>
+                        </div>
+                    </template>
+                </h-card>
+            </transition>
             <h-card>
-                <template #header>
-                    设置
-                </template>
                 <template #default>
-                    <div v-for="c in configCheckBoxes" class="box">
-                        <h-check-box v-model="configs[c.model]" @click="c.click">
-                            {{ c.label }}
-                        </h-check-box>
-                    </div>
                     <div class="box">
                         <h-button
                                 :color="'danger'"
@@ -95,11 +101,22 @@
   view-transition-name        : var(--card-view-transition-name);
 }
 
+.config-enter-active,
+.config-leave-active {
+  transition : all 0.3s ease-in-out;
+}
+
+.config-enter-from,
+.config-leave-to {
+  opacity   : 0;
+  translate : 0 -30%;
+}
+
 </style>
 
 <script lang="ts" setup>
 
-import {reactive, ref, watch} from "vue"
+import {onMounted, reactive, ref, watch} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
@@ -124,6 +141,7 @@ const configs = reactive<Configs>({
 })
 const tis = reactive<Ti[]>([])
 
+const showConfigs = ref(false)
 const tiI = ref(0)
 const tiCard = ref<SelectCardExpose>()
 const fileInput = ref<HTMLInputElement>()
@@ -259,8 +277,17 @@ function changeTheme(e: MouseEvent) {
     })
 }
 
-watch(()=>configs.confirm,()=>{
-    reset()
+onMounted(() => {
+    window.addEventListener('keydown', e => {
+        if (e.key === '`') {
+            showConfigs.value = !showConfigs.value
+        }
+    })
+})
+
+watch(() => configs.confirm, () => {
+    if (tis.length)
+        reset()
 })
 
 </script>
