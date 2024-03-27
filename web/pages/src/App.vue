@@ -51,10 +51,12 @@
                     data-fill-width/>
             <div>
                 <h-button
+                        :disabled="tiI===0"
                         :type="'primary'"
                         @click="goTi(-1)">上一题
                 </h-button>
                 <h-button
+                        :disabled="tiI>tis.length-2"
                         :type="'primary'"
                         @click="goTi(1)">下一题
                 </h-button>
