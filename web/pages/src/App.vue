@@ -6,14 +6,9 @@
                     设置
                 </template>
                 <template #default>
-                    <div class="box">
-                        <h-check-box v-model="dark" @click="changeTheme">
-                            暗色
-                        </h-check-box>
-                    </div>
-                    <div class="box">
-                        <h-check-box v-model="confirm">
-                            确认提交
+                    <div v-for="c in configCheckBoxes" class="box">
+                        <h-check-box v-model="configs[c.model]" @click="c.click">
+                            {{ c.label }}
                         </h-check-box>
                     </div>
                     <div class="box">
@@ -50,7 +45,7 @@
              data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
             <select-card
                     ref="tiCard"
-                    :confirm="confirm"
+                    :confirm="configs.confirm"
                     :ti="tis[tiI]"
                     class="ti-card"
                     data-fill-width/>
@@ -105,13 +100,44 @@ import {parseTi, Ti, TiJson} from "@/types"
 
 import {HButton, HCard, HCheckBox, viewTransition} from 'h-ui'
 
+interface Configs {
+    dark: boolean
+    confirm: boolean
+    cardAnim: boolean
+}
+
+interface ConfigCheckBox {
+    label: string
+    model: keyof Configs
+    click?: Function
+}
+
+const configs = reactive<Configs>({
+    dark: false,
+    confirm: false,
+    cardAnim: true,
+})
 const tis = reactive<Ti[]>([])
 
 const tiI = ref(0)
-const confirm = ref(false)
-const dark = ref(false)
 const tiCard = ref<SelectCardExpose>()
 const fileInput = ref<HTMLInputElement>()
+
+const configCheckBoxes: ConfigCheckBox[] = [
+    {
+        label: '暗色',
+        model: 'dark',
+        click: changeTheme
+    },
+    {
+        label: '切题动画',
+        model: 'cardAnim',
+    },
+    {
+        label: '确认提交',
+        model: 'confirm',
+    },
+]
 
 function reset() {
     tiCard.value!.reset()
@@ -119,6 +145,30 @@ function reset() {
 
 function changeTiI(i: number) {
     tiI.value = i
+}
+
+function startCardAnim(i: number, next: boolean) {
+    let card: HTMLElement = document.querySelector('.ti-card')!
+    viewTransition(async () => {
+        changeTiI(i)
+    }, () => {
+        card.style.setProperty('--card-view-transition-name', 'card')
+    }, () => {
+        let ts = ['0 0', '-30% 100%', '0 0']
+        let rs = ['0deg', '20deg', '0deg']
+        let zs = next ? [20, 10, 0] : [10, 20, 30]
+        document.documentElement.animate({
+            translate: next ? ts : ts.reverse(),
+            zIndex: zs,
+            rotate: rs,
+        }, {
+            duration: 500,
+            easing: 'ease-out',
+            pseudoElement: `::view-transition-${next ? 'old' : 'new'}(card)`,
+        })
+    }, null, () => {
+        card.style.setProperty('--card-view-transition-name', '')
+    })
 }
 
 function goTi(di: number) {
@@ -129,27 +179,11 @@ function goTi(di: number) {
         i = tis.length - 1
     if (tiI.value === i)
         return;
-    let card: HTMLElement = document.querySelector('.ti-card')!
-    viewTransition(async () => {
+    if (configs.cardAnim) {
+        startCardAnim(i, di > 0)
+    } else {
         changeTiI(i)
-    }, () => {
-        card.style.setProperty('--card-view-transition-name', 'card')
-    }, () => {
-        let ts = ['0 0', '-30% 100%', '0 0']
-        let rs = ['0deg', '20deg', '0deg']
-        let zs = di > 0 ? [20, 10, 0] : [10, 20, 30]
-        document.documentElement.animate({
-            translate: di > 0 ? ts : ts.reverse(),
-            zIndex: zs,
-            rotate: rs,
-        }, {
-            duration: 500,
-            easing: 'ease-out',
-            pseudoElement: `::view-transition-${di > 0 ? 'old' : 'new'}(card)`,
-        })
-    }, null, () => {
-        card.style.setProperty('--card-view-transition-name', '')
-    })
+    }
 }
 
 function load() {
@@ -173,6 +207,7 @@ function onChangeFile(e: Event) {
         const reader = new FileReader()
         reader.onload = function (e: ProgressEvent) {
             tis.length = 0
+            tiI.value = 0
             const tiJson = JSON.parse((e.target as FileReader).result as string) as TiJson
             if (tiJson.data && Array.isArray(tiJson.data)) {
                 tiJson.data.forEach(addTi)
@@ -190,7 +225,7 @@ function change() {
         root.removeAttribute('dark')
     else
         root.setAttribute('dark', '')
-    dark.value = !isDark
+    configs.dark = !isDark
 }
 
 function changeTheme(e: MouseEvent) {
