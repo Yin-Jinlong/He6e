@@ -99,7 +99,7 @@
 
 <script lang="ts" setup>
 
-import {reactive, ref} from "vue"
+import {reactive, ref, watch} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
@@ -258,5 +258,9 @@ function changeTheme(e: MouseEvent) {
         )
     })
 }
+
+watch(()=>configs.confirm,()=>{
+    reset()
+})
 
 </script>
