@@ -45,10 +45,13 @@
              data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
             <select-card
                     ref="tiCard"
+                    v-auto-height
                     :confirm="configs.confirm"
                     :ti="tis[tiI]"
                     class="ti-card"
-                    data-fill-width/>
+                    data-fill-width
+                    data-transition-fast
+                    style="overflow: hidden"/>
             <div>
                 <h-button
                         :disabled="tiI===0"
@@ -100,7 +103,7 @@ import {reactive, ref} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
-import {HButton, HCard, HCheckBox, viewTransition} from 'h-ui'
+import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight} from 'h-ui'
 
 interface Configs {
     dark: boolean
