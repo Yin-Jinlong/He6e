@@ -40,7 +40,7 @@
                             :border="true"
                             :type="(tiI+1)===i?'primary':''"
                             style="box-sizing: border-box;border-width: 2px"
-                            @click="tiI=i-1">
+                            @click="goTi(i-tiI-1)">
                         {{ i }}
                     </h-button>
                 </div>
@@ -52,6 +52,7 @@
                     ref="tiCard"
                     :confirm="confirm"
                     :ti="tis[tiI]"
+                    class="ti-card"
                     data-fill-width/>
             <div>
                 <h-button
@@ -88,6 +89,12 @@
   margin : 0.5em 0;
 }
 
+.ti-card {
+  transform-origin            : left top;
+  --card-view-transition-name : '';
+  view-transition-name        : var(--card-view-transition-name);
+}
+
 </style>
 
 <script lang="ts" setup>
@@ -96,7 +103,7 @@ import {reactive, ref} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
-import {HButton, HCard, HCheckBox} from 'h-ui'
+import {HButton, HCard, HCheckBox, viewTransition} from 'h-ui'
 
 const tis = reactive<Ti[]>([])
 
@@ -110,13 +117,39 @@ function reset() {
     tiCard.value!.reset()
 }
 
+function changeTiI(i: number) {
+    tiI.value = i
+}
+
 function goTi(di: number) {
     let i = tiI.value + di
     if (i < 0)
         i = 0
     else if (i >= tis.length)
         i = tis.length - 1
-    tiI.value = i
+    if (tiI.value === i)
+        return;
+    let card: HTMLElement = document.querySelector('.ti-card')!
+    viewTransition(async () => {
+        changeTiI(i)
+    }, () => {
+        card.style.setProperty('--card-view-transition-name', 'card')
+    }, () => {
+        let ts = ['0 0', '-30% 100%', '0 0']
+        let rs = ['0deg', '20deg', '0deg']
+        let zs = di > 0 ? [20, 10, 0] : [10, 20, 30]
+        document.documentElement.animate({
+            translate: di > 0 ? ts : ts.reverse(),
+            zIndex: zs,
+            rotate: rs,
+        }, {
+            duration: 500,
+            easing: 'ease-out',
+            pseudoElement: `::view-transition-${di > 0 ? 'old' : 'new'}(card)`,
+        })
+    }, null, () => {
+        card.style.setProperty('--card-view-transition-name', '')
+    })
 }
 
 function load() {
@@ -168,27 +201,22 @@ function changeTheme(e: MouseEvent) {
         Math.max(y, innerHeight - y)
     )
 
-    if (document.startViewTransition) {
-        const transition = document.startViewTransition(change)
-        transition.ready.then(() => {
-            const clipPath = [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`,
-            ];
-            document.documentElement.animate(
-                {
-                    clipPath: clipPath,
-                },
-                {
-                    duration: 400,
-                    easing: "ease-out",
-                    pseudoElement: "::view-transition-new(root)",
-                }
-            )
-        })
-    } else {
-        change()
-    }
+    viewTransition(change, null, () => {
+        const clipPath = [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+        ];
+        document.documentElement.animate(
+            {
+                clipPath: clipPath,
+            },
+            {
+                duration: 400,
+                easing: "ease-out",
+                pseudoElement: "::view-transition-new(root)",
+            }
+        )
+    })
 }
 
 </script>
