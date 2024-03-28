@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 
 import {ref, watch} from "vue"
-import {HButton, HCard} from 'h-ui'
+import {HButton, HCard} from '@yin-jinlong/h-ui'
 import {SelectCardExpose, SelectCardProps} from "./select-card"
 import {SelectButton, SelectButtonStatus} from "@components/select-button"
 import {JudgeTi, SelectTi, TiOption} from "@/types"

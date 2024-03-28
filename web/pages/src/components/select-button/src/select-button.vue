@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 
-import {DefinedNamedColor, HButton} from 'h-ui'
+import {DefinedNamedColor, HButton} from '@yin-jinlong/h-ui'
 import {SelectButtonProps} from "./select-button"
 
 const props = defineProps<SelectButtonProps>()

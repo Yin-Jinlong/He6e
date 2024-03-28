@@ -120,7 +120,7 @@ import {onMounted, reactive, ref, watch} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
-import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight} from 'h-ui'
+import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight} from '@yin-jinlong/h-ui'
 
 interface Configs {
     dark: boolean
