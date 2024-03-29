@@ -1,10 +1,7 @@
 @use 'var' as *;
 
-@import '@yin-jinlong/h-ui/style/src/base';
+@import '@yin-jinlong/h-ui/style/src/index';
 @import '@yin-jinlong/h-ui/style/src/base-dark';
-@import '@yin-jinlong/h-ui/style/src/button';
-@import '@yin-jinlong/h-ui/style/src/check-box';
-@import '@yin-jinlong/h-ui/style/src/card';
 
 ::view-transition-old(*),
 ::view-transition-new(*) {

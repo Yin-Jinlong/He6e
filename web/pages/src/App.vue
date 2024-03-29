@@ -7,6 +7,12 @@
                         设置
                     </template>
                     <template #default>
+                        <div class="box">
+                            <label data-flex-center style="justify-content: start">
+                                暗色
+                                <h-switch v-model="configs.dark" @click="changeTheme"/>
+                            </label>
+                        </div>
                         <div v-for="c in configCheckBoxes" class="box">
                             <h-check-box v-model="configs[c.model]" @click="c.click">
                                 {{ c.label }}
@@ -120,7 +126,7 @@ import {onMounted, reactive, ref, watch} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
 import {parseTi, Ti, TiJson} from "@/types"
 
-import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight} from '@yin-jinlong/h-ui'
+import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight, HSwitch, toggleDark, isDark} from '@yin-jinlong/h-ui'
 
 interface Configs {
     dark: boolean
@@ -147,11 +153,6 @@ const tiCard = ref<SelectCardExpose>()
 const fileInput = ref<HTMLInputElement>()
 
 const configCheckBoxes: ConfigCheckBox[] = [
-    {
-        label: '暗色',
-        model: 'dark',
-        click: changeTheme
-    },
     {
         label: '切题动画',
         model: 'cardAnim',
@@ -242,13 +243,8 @@ function onChangeFile(e: Event) {
 
 
 function change() {
-    const root = document.documentElement
-    let isDark = root.hasAttribute('dark')
-    if (isDark)
-        root.removeAttribute('dark')
-    else
-        root.setAttribute('dark', '')
-    configs.dark = !isDark
+    toggleDark()
+    configs.dark = isDark()
 }
 
 function changeTheme(e: MouseEvent) {

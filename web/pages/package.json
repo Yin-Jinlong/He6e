@@ -17,7 +17,7 @@
     "vite": "^5.1.5"
   },
   "dependencies": {
-    "@yin-jinlong/h-ui": "^0.1.1",
+    "@yin-jinlong/h-ui": "^0.2.0",
     "vue": "^3.4.21"
   }
 }
