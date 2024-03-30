@@ -55,15 +55,26 @@
         </div>
         <div v-if="tis.length"
              data-flex-column-center style="width: 70%;padding-right: 1em;justify-content: start">
-            <select-card
-                    ref="tiCard"
-                    v-auto-height
-                    :confirm="configs.confirm"
-                    :ti="tis[tiI]"
-                    class="ti-card"
-                    data-fill-width
-                    data-transition-fast
-                    style="overflow: hidden"/>
+            <h3>{{ getTiType() }}</h3>
+            <div class="ti-card" data-fill-width>
+                <essay-card
+                        v-if="tis[tiI].type==='essay'"
+                        ref="essayTiCard"
+                        v-auto-height
+                        :ti="tis[tiI] as EssayTi"
+                        class="ti-card"
+                        data-fill-width
+                        data-transition-fast/>
+                <select-card
+                        v-else
+                        ref="selectTiCard"
+                        v-auto-height
+                        :confirm="configs.confirm"
+                        :ti="tis[tiI]"
+                        data-fill-width
+                        data-transition-fast
+                        style="overflow: hidden"/>
+            </div>
             <div>
                 <h-button
                         :disabled="tiI===0"
@@ -124,9 +135,10 @@
 
 import {onMounted, reactive, ref, watch} from "vue"
 import {SelectCard, SelectCardExpose} from "@components/select-card"
-import {parseTi, Ti, TiJson} from "@/types"
+import {EssayTi, parseTi, SelectTi, Ti, TiJson} from "@/types"
 
 import {HButton, HCard, HCheckBox, viewTransition, vAutoHeight, HSwitch, toggleDark, isDark} from '@yin-jinlong/h-ui'
+import {EssayCard, EssayCardExpose} from "@components/essay-card"
 
 interface Configs {
     dark: boolean
@@ -149,7 +161,8 @@ const tis = reactive<Ti[]>([])
 
 const showConfigs = ref(false)
 const tiI = ref(0)
-const tiCard = ref<SelectCardExpose>()
+const selectTiCard = ref<SelectCardExpose>()
+const essayTiCard = ref<EssayCardExpose>()
 const fileInput = ref<HTMLInputElement>()
 
 const configCheckBoxes: ConfigCheckBox[] = [
@@ -164,7 +177,11 @@ const configCheckBoxes: ConfigCheckBox[] = [
 ]
 
 function reset() {
-    tiCard.value!.reset()
+    if (tis[tiI.value].type === 'essay') {
+        essayTiCard.value?.reset()
+    } else {
+        selectTiCard.value?.reset()
+    }
 }
 
 function changeTiI(i: number) {
@@ -271,6 +288,28 @@ function changeTheme(e: MouseEvent) {
             }
         )
     })
+}
+
+function getTiType(): string {
+    switch (tis[tiI.value].type) {
+        case "judge":
+            return '判断'
+        case "essay":
+            return '简答'
+        case "select":
+            let os = (tis[tiI.value] as SelectTi<any>).options
+            let has = false
+            for (let i = 0; i < os.length; i++) {
+                if (os[i].right) {
+                    if (has)
+                        return '多选'
+                    has = true
+                }
+            }
+            return has ? '单选' : '未知'
+        default:
+            return '未知'
+    }
 }
 
 onMounted(() => {

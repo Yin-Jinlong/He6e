@@ -9,7 +9,7 @@
       "required": ["type", "title"],
       "properties": {
         "type": {
-          "enum": ["select", "judge"]
+          "enum": ["select", "judge", "essay"]
         },
         "title": {
           "type": "string",
@@ -72,6 +72,25 @@
           "$ref": "#/definitions/ti"
         }
       ]
+    },
+    "essay-ti": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["essay"]
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/ti"
+        }
+      ]
     }
   },
   "properties": {
@@ -90,6 +109,9 @@
           },
           {
             "$ref": "#/definitions/judge-ti"
+          },
+          {
+            "$ref": "#/definitions/essay-ti"
           }
         ]
       }
