@@ -4,11 +4,8 @@
   "description": "web页面",
   "author": "Yin-Jinlong",
   "scripts": {
-    "build": "pnpm -C ui build && pnpm -C pages build",
-    "build:pages": "pnpm -C pages build",
-    "build:ui": "pnpm -C ui build",
-    "dev:pages": "pnpm -C pages dev",
-    "dev:ui": "pnpm -C ui dev"
+    "dev": "pnpm -C pages dev",
+    "build": "pnpm -C pages build"
   },
   "license": "LGPL-3.0-or-later"
 }

@@ -1,4 +1,4 @@
-export type TiType = 'select' | 'judge' | 'essay'
+export type TiType = 'select' | 'judge' | 'essay' | 'fill'
 
 export interface Ti {
     type: TiType
