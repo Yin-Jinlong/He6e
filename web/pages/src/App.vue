@@ -18,6 +18,14 @@
                                 {{ c.label }}
                             </h-check-box>
                         </div>
+                        <div class="box">
+                            <h-button
+                                    :color="'emphasize'"
+                                    type="primary"
+                                    @click="shuffle">
+                                打乱
+                            </h-button>
+                        </div>
                     </template>
                 </h-card>
             </transition>
@@ -148,7 +156,7 @@ import {
     HSwitch,
     toggleDark,
     isDark,
-    HMessage
+    HMessage, installThemeEvent
 } from '@yin-jinlong/h-ui'
 import {EssayCard, EssayCardExpose} from '@components/essay-card'
 
@@ -344,7 +352,16 @@ function getTiType(): string {
     }
 }
 
+function shuffle() {
+    if (tis.length < 2) {
+        HMessage.warning('无可打乱题目')
+        return
+    }
+    tis.sort(() => Math.random() - 0.5)
+}
+
 onMounted(() => {
+    installThemeEvent()
     window.addEventListener('keydown', e => {
         if (e.key === '`') {
             showConfigs.value = !showConfigs.value
