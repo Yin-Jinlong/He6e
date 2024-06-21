@@ -11,8 +11,8 @@ importers:
   pages:
     dependencies:
       '@yin-jinlong/h-ui':
-        specifier: ^0.4.3
-        version: 0.4.3(typescript@5.4.2)
+        specifier: ^0.6.0
+        version: 0.6.0(typescript@5.4.2)
       vue:
         specifier: ^3.4.21
         version: 3.4.21(typescript@5.4.2)
@@ -462,8 +462,8 @@ packages:
   /@vue/shared@3.4.21:
     resolution: {integrity: sha512-PuJe7vDIi6VYSinuEbUIQgMIRZGgM8e4R+G+/dQTk0X1NEdvgvvgv7m+rfmDH1gZzyA1OjjoWskvHlfRNfQf3g==, tarball: https://registry.npmmirror.com/@vue/shared/-/shared-3.4.21.tgz}
 
-  /@yin-jinlong/h-ui@0.4.3(typescript@5.4.2):
-    resolution: {integrity: sha512-psI971XVTRhO8sr9VuloYJAF8BY0k3bwZrAT4b4dlrNjaovDzA8LvXMHDT1UMPY6lyXDxvNSRAIE7j8Yov6Xkw==}
+  /@yin-jinlong/h-ui@0.6.0(typescript@5.4.2):
+    resolution: {integrity: sha512-H2pN/DQz6yCmvfEwqWTf7ZUEHhADBzYuoVFMC+p0ECyJ5SxyeNPMMGglPssQ2mKcq+hp0UIDNGdRuEWNGnd2Rw==}
     dependencies:
       chroma-js: 2.4.2
       vue: 3.4.21(typescript@5.4.2)

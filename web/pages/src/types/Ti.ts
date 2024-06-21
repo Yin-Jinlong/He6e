@@ -25,6 +25,11 @@ export declare interface EssayTi extends Ti {
     points: string[]
 }
 
+export declare interface FillTi extends Ti {
+    type: 'fill'
+
+}
+
 export declare interface TiJson {
     version: number
     data: Ti[]

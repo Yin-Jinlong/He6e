@@ -1,7 +1,7 @@
 <template>
     <h-card class="card">
         <template #header>
-            {{ ti.title }}
+            {{tiIndex}}.{{ ti.title }}
         </template>
         <template #default>
             <h-button v-if="!show" class="show-btn" data-fill-width @click="show = true">

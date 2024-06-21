@@ -1,7 +1,7 @@
 <template>
     <h-card class="card">
         <template #header>
-            {{ ti.title }}
+            {{tiIndex}}.{{ ti.title.replaceAll('\\n','\n') }}
         </template>
         <template #default>
             <div class="select-box"
@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 
-import {ref, watch} from "vue"
+import {nextTick, ref, watch} from 'vue'
 import {HButton, HCard} from '@yin-jinlong/h-ui'
 import {SelectCardExpose, SelectCardProps} from "./select-card"
 import {SelectButton, SelectButtonStatus} from "@components/select-button"
@@ -97,8 +97,19 @@ function addSelect(o: TiOption<string>) {
             selects.value.clear()
         selects.value.add(o)
     }
-    if (!props.confirm && isRadioType())
+    if (!props.confirm && isRadioType()) {
         show.value = true
+        let right=false
+        for (const o of selects.value) {
+            if (o.right) {
+                right=true
+                break
+            }
+        }
+        nextTick().then(()=>{
+            props.onShow(right)
+        })
+    }
 }
 
 function reset() {
