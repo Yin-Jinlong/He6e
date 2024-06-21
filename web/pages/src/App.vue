@@ -165,6 +165,7 @@ interface Configs {
     confirm: boolean
     cardAnim: boolean
     autoNext: boolean
+    shuffleOptions: boolean
 }
 
 interface ConfigCheckBox {
@@ -177,7 +178,8 @@ const configs = reactive<Configs>({
     dark: false,
     confirm: false,
     cardAnim: false,
-    autoNext: true
+    autoNext: true,
+    shuffleOptions: true
 })
 const tis = reactive<Ti[]>([])
 
@@ -198,6 +200,9 @@ const configCheckBoxes: ConfigCheckBox[] = [
     }, {
         label: '自动下一题',
         model: 'autoNext',
+    }, {
+        label: '打乱选项',
+        model: 'shuffleOptions'
     }
 ]
 
@@ -358,6 +363,14 @@ function shuffle() {
         return
     }
     tis.sort(() => Math.random() - 0.5)
+    if (configs.shuffleOptions) {
+        tis.forEach(ti => {
+            if (ti.type == 'select') {
+                (ti as SelectTi<any>).options.sort(() => Math.random() - 0.5)
+            }
+        })
+        tiI.value = 0
+    }
 }
 
 onMounted(() => {
