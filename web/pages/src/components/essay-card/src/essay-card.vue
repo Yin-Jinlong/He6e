@@ -56,4 +56,8 @@ defineExpose<EssayCardExpose>({
     reset
 })
 
+watch(() => props.ti, () => {
+    reset()
+})
+
 </script>
